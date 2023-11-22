@@ -1,5 +1,6 @@
 package com.example.genshinassistant.views
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -14,13 +15,17 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.rememberImagePainter
+import com.example.genshinassistant.viewModels.CharacterCardViewModel
 
 @Composable
-fun CharacterCard() {
+fun CharacterCard(viewModel: CharacterCardViewModel) {
     Box(
         modifier = Modifier
             .size(130.dp, 170.dp)
@@ -33,7 +38,24 @@ fun CharacterCard() {
                 .fillMaxWidth()
                 .height(130.dp)
                 .background(androidx.compose.ui.graphics.Color.Green)
-        )
+        ){
+            //image
+            val context = LocalContext.current
+            val painter: Painter = rememberImagePainter(
+                data = "your_base_url/characters/${viewModel.nameId}/icon-big",
+                builder = {
+                    // Configure Coil options if needed
+                    crossfade(true)
+                }
+            )
+
+            Image(
+                painter = painter,
+                contentDescription = null, // Set appropriate content description
+                modifier = Modifier.size(64.dp) // Set the size as needed
+            )
+            }
+        }
 
         // Section rouge en bas
         Box(
@@ -44,7 +66,7 @@ fun CharacterCard() {
         ) {
             // Texte centré dans la zone rouge avec Signika Bold
             Text(
-                text = "Kazuha",
+                text = viewModel.nameId,
                 color = Color(android.graphics.Color.parseColor("#6F6972")),
                 fontSize = 16.sp,
                 //fontFamily = FontFamily(Font(R.font)), //Signika

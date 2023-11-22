@@ -11,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.genshinassistant.ui.theme.GenshinAssistantTheme
+import com.example.genshinassistant.viewModels.CharacterCardViewModel
 import com.example.genshinassistant.views.CharacterCard
 
 class MainActivity : ComponentActivity() {
@@ -18,7 +19,8 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             GenshinAssistantTheme {
-                CharacterCard()
+                var vm = CharacterCardViewModel("kazuha");
+                CharacterCard(vm);
             }
         }
     }
