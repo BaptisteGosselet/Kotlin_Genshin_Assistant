@@ -3,7 +3,9 @@ package com.example.genshinassistant.viewModels
 import android.util.Log
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.genshinassistant.models.Character
@@ -12,47 +14,41 @@ import kotlinx.coroutines.launch
 
 class CharacterListViewModel() : ViewModel() {
 
-    val apiService = APIService.retrofitApiService
+    val apiService = APIService.retrofitApiService;
+    var errorMessage: String by mutableStateOf("");
 
-    private val _characters = mutableStateOf<List<Character>>(emptyList())
-    val characters: State<List<Character>> = _characters
+    private val _characters = mutableStateOf<List<Character>>(listOf());
+    val characters: State<List<Character>> = _characters;
 
-    private val _names = mutableStateOf<List<String>>(emptyList())
-    val names: State<List<String>> = _names
-
-    val isLoading:MutableState<Boolean> = mutableStateOf(true);
-
-    init{
-        loadNames();
+    init {
         loadCharacters();
-        isLoading.value = false;
     }
 
-    fun loadNames() {
+    private fun loadCharacters() {
         viewModelScope.launch {
+
+            lateinit var names: List<String>;
+
             try {
-                val names = apiService.getAllCharacters()
-                _names.value = names
+                names = apiService.getAllCharacters();
             } catch (e: Exception) {
-                e.printStackTrace()
+                errorMessage = e.message.toString()
             }
-        }
-    }
 
-
-    fun loadCharacters() {
-        viewModelScope.launch {
-            try {
-                val charactersList = mutableListOf<Character>()
-                for (name in _names.value) {
-                    Log.d("grid", "VM : $name");
-                    val character = apiService.getCharacterByName(name)
-                    charactersList.add(character)
+            var charactersList:MutableList<Character> = mutableListOf();
+            for(name in names){
+                try{
+                    var c:Character = apiService.getCharacterByName(name);
+                    c.nameId = name;
+                    charactersList.add(c);
                 }
-                _characters.value = charactersList
-            } catch (e: Exception) {
-                e.printStackTrace()
+                catch (e: Exception){
+                    errorMessage = e.message.toString();
+                }
             }
+
+            _characters.value = charactersList;
         }
     }
+
 }

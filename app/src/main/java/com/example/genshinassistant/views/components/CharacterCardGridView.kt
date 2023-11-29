@@ -20,10 +20,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
-import com.example.genshinassistant.viewModels.CharacterCardViewModel
 
 @Composable
-fun CharacterCard(viewModel: CharacterCardViewModel) {
+fun CharacterCard(nameId:String, name:String, vision:String) {
 
     Box(modifier = Modifier.padding(8.dp)) {
         Column(
@@ -31,23 +30,32 @@ fun CharacterCard(viewModel: CharacterCardViewModel) {
                 .size(130.dp, 170.dp)
                 .clip(RoundedCornerShape(16.dp))
         ) {
+
+            var bgColor:String = when (vision) {
+                "Anemo"     -> "#3FD3DC"
+                "Geo"       -> "#DCA73F"
+                "Pyro"      -> "#DC6E3F"
+                "Cryo"      -> "#3FD3DC"
+                "Hydro"     -> "#3F4FDC"
+                "Electro"   -> "#7B3FDC"
+                "Dendro"    -> "#FEFFF1"
+                else        -> "#FEFFF1"
+            };
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(130.dp)
+                    .background(color = Color(android.graphics.Color.parseColor(bgColor)).copy(alpha = 0.7f) )
             ) {
 
                 AsyncImage(
-                    model = "https://api.genshin.dev/characters/${viewModel.nameId}/icon-big",
+                    model = "https://api.genshin.dev/characters/${nameId}/icon-big",
                     contentDescription = "",
                     modifier = Modifier.fillMaxSize()
                 )
 
-
-
                 AsyncImage(
-                    //model = "https://api.genshin.dev/elements/${viewModel.vision}/icon",
-                    model = "https://api.genshin.dev/elements/${viewModel.vision}/icon",
+                    model = "https://api.genshin.dev/elements/${vision.lowercase()}/icon",
                     contentDescription = "",
                     modifier = Modifier
                         .height(35.dp)
@@ -62,9 +70,8 @@ fun CharacterCard(viewModel: CharacterCardViewModel) {
                     .height(40.dp)
                     .background(color = Color(android.graphics.Color.parseColor("#FEFFF1")))
             ) {
-                // Texte centré dans la zone rouge avec Signika Bold
                 Text(
-                    text = viewModel.nameId,
+                    text = name,
                     color = Color(android.graphics.Color.parseColor("#6F6972")),
                     fontSize = 16.sp,
                     //fontFamily = FontFamily(Font(R.font)), //Signika

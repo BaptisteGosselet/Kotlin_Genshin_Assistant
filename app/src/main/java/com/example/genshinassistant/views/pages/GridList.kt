@@ -16,8 +16,19 @@ import com.example.genshinassistant.viewModels.CharacterListViewModel
 @Composable
 fun GridList() {
 
+
     val vm = CharacterListViewModel();
-    val characters = vm.characters;
+
+    LazyColumn(modifier = Modifier.fillMaxHeight()){
+        items(vm.characters.value){
+            character ->
+            CharacterCard(
+                nameId = character.nameId.toString(),
+                name = character.name.toString(),
+                vision = character.vision.toString())
+        }
+    }
+
 
     /*
     if(vm.isLoading.value){
