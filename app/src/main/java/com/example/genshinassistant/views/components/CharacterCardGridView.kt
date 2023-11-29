@@ -38,7 +38,7 @@ fun CharacterCard(nameId:String, name:String, vision:String) {
                 "Cryo"      -> "#3FD3DC"
                 "Hydro"     -> "#3F4FDC"
                 "Electro"   -> "#7B3FDC"
-                "Dendro"    -> "#FEFFF1"
+                "Dendro"    -> "#92ef66"
                 else        -> "#FEFFF1"
             };
             Box(
