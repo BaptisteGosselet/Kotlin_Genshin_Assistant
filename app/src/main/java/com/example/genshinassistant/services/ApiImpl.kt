@@ -1,6 +1,5 @@
-package com.example.genshinassistant.repository
+package com.example.genshinassistant.service
 
-import android.graphics.drawable.Drawable
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import retrofit2.Retrofit

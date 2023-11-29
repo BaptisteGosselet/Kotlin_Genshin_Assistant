@@ -5,5 +5,5 @@ data class SkillTalent(
     val name: String,
     val type: String,
     val unlock: String,
-    val upgrades: List<Upgrade>
+    val upgrades: List<Upgrade> = listOf()
 )

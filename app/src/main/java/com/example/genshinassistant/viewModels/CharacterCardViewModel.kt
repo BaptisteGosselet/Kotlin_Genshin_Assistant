@@ -1,17 +1,13 @@
 package com.example.genshinassistant.viewModels
 
-import android.media.Image
 import android.util.Log
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.graphics.painter.Painter
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.genshinassistant.models.Character
-import com.example.genshinassistant.repository.APIService
+import com.example.genshinassistant.service.APIService
 import kotlinx.coroutines.launch
 import java.lang.Exception
 
@@ -21,7 +17,8 @@ class CharacterCardViewModel(
 
     var nameId:String="";
 
-    //var characterIcon = mutableStateOf<Res?>(null);
+    lateinit var character:Character;
+    var vision:String=""
 
     var errorMessage : String by mutableStateOf("");
 
@@ -36,11 +33,13 @@ class CharacterCardViewModel(
             val apiService = APIService.retrofitApiService;
             Log.d("montag", name)
             try {
-               // characterIcon.value = apiService.getCharacterIcon(name);
+                character = apiService.getCharacterByName(nameId);
+                vision = character.vision
+                Log.d("montag", "$nameId : $vision");
                // Log.d("montag", characterIcon.value.toString());
             }
             catch (e: Exception){
-                Log.d("montag", "ERREUR IMAGE");
+                Log.d("montag", e.message.toString());
 
                 errorMessage = e.message.toString();
             }
