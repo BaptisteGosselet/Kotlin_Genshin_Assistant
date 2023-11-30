@@ -17,7 +17,8 @@ class CharacterListViewModel() : ViewModel() {
     val apiService = APIService.retrofitApiService;
     var errorMessage: String by mutableStateOf("");
 
-    private val _characters = mutableStateOf<List<Character>>(listOf());
+    private val _names = mutableStateOf<List<String>>(listOf());
+    private var _characters = mutableStateOf<List<Character>>(listOf());
     val characters: State<List<Character>> = _characters;
 
     init {
@@ -27,27 +28,23 @@ class CharacterListViewModel() : ViewModel() {
     private fun loadCharacters() {
         viewModelScope.launch {
 
-            lateinit var names: List<String>;
-
             try {
-                names = apiService.getAllCharacters();
+                _names.value = apiService.getAllCharacters();
             } catch (e: Exception) {
                 errorMessage = e.message.toString()
             }
 
-            var charactersList:MutableList<Character> = mutableListOf();
-            for(name in names){
+            for(name in _names.value){
                 try{
                     var c:Character = apiService.getCharacterByName(name);
                     c.nameId = name;
-                    charactersList.add(c);
+                    _characters.value += c;
                 }
                 catch (e: Exception){
                     errorMessage = e.message.toString();
                 }
             }
 
-            _characters.value = charactersList;
         }
     }
 
