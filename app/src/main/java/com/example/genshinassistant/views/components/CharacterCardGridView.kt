@@ -1,6 +1,8 @@
 package com.example.genshinassistant.views
 
+import android.util.Log
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -24,11 +26,16 @@ import coil.compose.AsyncImage
 @Composable
 fun CharacterCard(nameId:String, name:String, vision:String) {
 
-    Box(modifier = Modifier.padding(8.dp)) {
+    Box(
+        modifier = Modifier.padding(8.dp)
+    ) {
         Column(
             modifier = Modifier
                 .size(130.dp, 170.dp)
                 .clip(RoundedCornerShape(16.dp))
+                .clickable{
+                    Log.d("chara", nameId)
+                }
         ) {
 
             var bgColor:String = when (vision) {
