@@ -81,7 +81,6 @@ fun CharacterCardRowView(nameId:String, name:String, vision:String) {
                     text = name,
                     color = Color(android.graphics.Color.parseColor("#6F6972")),
                     fontSize = 20.sp,
-                    //fontFamily = FontFamily(Font(R.font)), //Signika
                     textAlign = TextAlign.Center,
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier.fillMaxSize().wrapContentHeight(align = Alignment.CenterVertically)
