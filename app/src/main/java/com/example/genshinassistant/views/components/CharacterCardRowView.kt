@@ -76,7 +76,6 @@ fun CharacterCardRowView(nameId:String, name:String, vision:String) {
             Box(
                 modifier = Modifier
                     .background(color = Color(android.graphics.Color.parseColor("#FEFFF1")))
-                    .wrapContentHeight(align = Alignment.CenterVertically)
                 ){
                 Text(
                     text = name,
@@ -85,7 +84,7 @@ fun CharacterCardRowView(nameId:String, name:String, vision:String) {
                     //fontFamily = FontFamily(Font(R.font)), //Signika
                     textAlign = TextAlign.Center,
                     fontWeight = FontWeight.Bold,
-                    modifier = Modifier.fillMaxSize()
+                    modifier = Modifier.fillMaxSize().wrapContentHeight(align = Alignment.CenterVertically)
                 )
             }
         }
