@@ -24,7 +24,7 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 
 @Composable
-fun CharacterCard(nameId:String, name:String, vision:String) {
+fun CharacterCardGridView(nameId:String, name:String, vision:String) {
 
     Box(
         modifier = Modifier.padding(8.dp)
@@ -81,7 +81,6 @@ fun CharacterCard(nameId:String, name:String, vision:String) {
                     text = name,
                     color = Color(android.graphics.Color.parseColor("#6F6972")),
                     fontSize = 16.sp,
-                    //fontFamily = FontFamily(Font(R.font)), //Signika
                     textAlign = TextAlign.Center,
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier
