@@ -21,10 +21,7 @@ import androidx.compose.ui.unit.dp
 import com.example.genshinassistant.R
 import com.example.genshinassistant.viewModels.CharacterListViewModel
 @Composable
-fun GridList() {
-
-    val vm = CharacterListViewModel();
-
+fun GridList(viewModel: CharacterListViewModel) {
 
     Image(
         painter = painterResource(id = R.drawable.bg_list),
@@ -44,7 +41,7 @@ fun GridList() {
                 end = 0.dp,
                 bottom = 20.dp)
         ){
-            items(vm.characters.value){
+            items(viewModel.characters.value){
                     character ->
                 CharacterCardGridView(
                     nameId = character.nameId.toString(),

@@ -18,11 +18,7 @@ import androidx.compose.ui.unit.dp
 import com.example.genshinassistant.R
 import com.example.genshinassistant.viewModels.CharacterListViewModel
 @Composable
-fun RowList() {
-
-
-    val vm = CharacterListViewModel();
-
+fun RowList(viewModel: CharacterListViewModel) {
 
     Image(
         painter = painterResource(id = R.drawable.bg_list),
@@ -34,7 +30,7 @@ fun RowList() {
         modifier = Modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
     ){
-        items(vm.characters.value){
+        items(viewModel.characters.value){
                 character ->
                 CharacterCardRowView(
                     nameId = character.nameId.toString(),

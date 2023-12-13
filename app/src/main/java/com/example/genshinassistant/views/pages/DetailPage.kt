@@ -10,9 +10,7 @@ import com.example.genshinassistant.viewModels.DetailViewModel
 
 @Composable
 fun DetailPage(nameId:String) {
-    Log.d("bapt", "detailpage")
 
-    //val vm = DetailViewModel(nameId);
     val vm: DetailViewModel = remember { DetailViewModel(nameId) }
 
     Column {
