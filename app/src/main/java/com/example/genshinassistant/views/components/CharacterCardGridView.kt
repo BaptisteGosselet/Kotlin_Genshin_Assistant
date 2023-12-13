@@ -25,7 +25,6 @@ import coil.compose.AsyncImage
 
 @Composable
 fun CharacterCardGridView(nameId:String, name:String, vision:String) {
-
     Box(
         modifier = Modifier.padding(8.dp)
     ) {
