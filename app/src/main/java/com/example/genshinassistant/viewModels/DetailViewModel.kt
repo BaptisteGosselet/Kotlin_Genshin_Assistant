@@ -1,5 +1,6 @@
 package com.example.genshinassistant.viewModels
 
+import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -30,6 +31,10 @@ class DetailViewModel(nameId:String) : ViewModel() {
                 errorMessage = e.message.toString()
             }
         }
+    }
+
+    fun addToFavorite(nameId: String){
+        Log.d("bapt", "addToFavorite($nameId)")
     }
 
 }

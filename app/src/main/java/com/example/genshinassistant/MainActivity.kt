@@ -5,6 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.rememberNavController
+import androidx.compose.ui.tooling.preview.Preview
 import com.example.genshinassistant.ui.theme.GenshinAssistantTheme
 import com.example.genshinassistant.views.CharacterCardGridView
 import com.example.genshinassistant.views.DetailPage
@@ -22,6 +23,5 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
-
 
 }
