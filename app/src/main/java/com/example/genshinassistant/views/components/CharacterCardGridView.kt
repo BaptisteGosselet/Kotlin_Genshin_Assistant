@@ -1,4 +1,4 @@
-package com.example.genshinassistant.views
+package com.example.genshinassistant.views.components
 
 import android.util.Log
 import androidx.compose.foundation.background
@@ -21,10 +21,15 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import coil.compose.AsyncImage
+import com.example.genshinassistant.navigation.RouteNames
 
 @Composable
-fun CharacterCardGridView(nameId:String, name:String, vision:String) {
+fun CharacterCardGridView(nameId:String, name:String, vision:String, navController:NavController) {
+
+
+
     Box(
         modifier = Modifier.padding(8.dp)
     ) {
@@ -32,12 +37,15 @@ fun CharacterCardGridView(nameId:String, name:String, vision:String) {
             modifier = Modifier
                 .size(130.dp, 170.dp)
                 .clip(RoundedCornerShape(16.dp))
-                .clickable{
-                    Log.d("chara", nameId)
+                .clickable {
+                    Log.d("bapt", RouteNames.details + "/$nameId")
+                    navController.navigate(RouteNames.details + "/$nameId") {
+                        popUpTo(RouteNames.grid)
+                    }
                 }
         ) {
 
-            var bgColor:String = when (vision) {
+            val bgColor:String = when (vision) {
                 "Anemo"     -> "#3FD3DC"
                 "Geo"       -> "#DCA73F"
                 "Pyro"      -> "#DC6E3F"
@@ -46,7 +54,8 @@ fun CharacterCardGridView(nameId:String, name:String, vision:String) {
                 "Electro"   -> "#7B3FDC"
                 "Dendro"    -> "#92ef66"
                 else        -> "#FEFFF1"
-            };
+            }
+
             Box(
                 modifier = Modifier
                     .fillMaxWidth()

@@ -3,10 +3,8 @@ package com.example.genshinassistant.views
 
 import android.util.Log
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -18,11 +16,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.example.genshinassistant.R
 import com.example.genshinassistant.viewModels.CharacterListViewModel
-@Composable
-fun GridList(viewModel: CharacterListViewModel) {
+import com.example.genshinassistant.views.components.CharacterCardGridView
 
+@Composable
+fun GridList(characterListViewModel: CharacterListViewModel, navController: NavController) {
     Image(
         painter = painterResource(id = R.drawable.bg_list),
         contentDescription = "Background image",
@@ -41,12 +41,13 @@ fun GridList(viewModel: CharacterListViewModel) {
                 end = 0.dp,
                 bottom = 20.dp)
         ){
-            items(viewModel.characters.value){
+            items(characterListViewModel.characters.value){
                     character ->
                 CharacterCardGridView(
                     nameId = character.nameId.toString(),
                     name = character.name.toString(),
-                    vision = character.vision.toString())
+                    vision = character.vision.toString(),
+                    navController = navController)
             }
         }
 
