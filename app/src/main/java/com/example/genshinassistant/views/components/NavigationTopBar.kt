@@ -25,7 +25,7 @@ fun NavigationTopBar(navController: NavController) {
     var selectedItem by remember { mutableStateOf(0) }
     val defaultRoute = RouteNames.grid
 
-    NavigationBar {
+    NavigationBar() {
         val navBackStackEntry by navController.currentBackStackEntryAsState()
         val currentDestination = navBackStackEntry?.destination
 
