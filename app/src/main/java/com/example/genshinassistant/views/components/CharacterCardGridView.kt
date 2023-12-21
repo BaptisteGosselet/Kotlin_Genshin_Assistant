@@ -38,7 +38,6 @@ fun CharacterCardGridView(nameId:String, name:String, vision:String, navControll
                 .size(130.dp, 170.dp)
                 .clip(RoundedCornerShape(16.dp))
                 .clickable {
-                    Log.d("bapt", RouteNames.details + "/$nameId")
                     navController.navigate(RouteNames.details + "/$nameId") {
                         popUpTo(RouteNames.grid)
                     }
