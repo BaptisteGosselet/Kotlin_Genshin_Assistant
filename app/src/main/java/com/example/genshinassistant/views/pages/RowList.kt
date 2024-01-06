@@ -15,14 +15,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.example.genshinassistant.R
 import com.example.genshinassistant.viewModels.CharacterListViewModel
 @Composable
-fun RowList() {
-
-
-    val vm = CharacterListViewModel();
-
+fun RowList(viewModel: CharacterListViewModel, navController: NavController) {
 
     Image(
         painter = painterResource(id = R.drawable.bg_list),
@@ -34,12 +31,13 @@ fun RowList() {
         modifier = Modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
     ){
-        items(vm.characters.value){
+        items(viewModel.characters.value){
                 character ->
                 CharacterCardRowView(
                     nameId = character.nameId.toString(),
                     name = character.name.toString(),
-                    vision = character.vision.toString())
+                    vision = character.vision.toString(),
+                    navController)
             }
         }
 

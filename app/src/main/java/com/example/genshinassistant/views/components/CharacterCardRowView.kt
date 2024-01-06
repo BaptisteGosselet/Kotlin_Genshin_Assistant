@@ -24,10 +24,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import coil.compose.AsyncImage
+import com.example.genshinassistant.navigation.RouteNames
 
 @Composable
-fun CharacterCardRowView(nameId:String, name:String, vision:String) {
+fun CharacterCardRowView(nameId:String, name:String, vision:String, navController:NavController) {
 
     Box(modifier = Modifier.padding(8.dp)){
         Row(
@@ -36,11 +38,13 @@ fun CharacterCardRowView(nameId:String, name:String, vision:String) {
                 .size(350.dp, 120.dp)
                 .clip(RoundedCornerShape(16.dp))
                 .clickable {
-                    Log.d("chara", nameId)
+                    navController.navigate(RouteNames.details + "/$nameId") {
+                        popUpTo(RouteNames.grid)
+                    }
                 }
         ) {
             Box(modifier = Modifier.size(120.dp, 120.dp)) {
-                var bgColor: String = when (vision) {
+                val bgColor: String = when (vision) {
                     "Anemo" -> "#3FD3DC"
                     "Geo" -> "#DCA73F"
                     "Pyro" -> "#DC6E3F"
