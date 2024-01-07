@@ -1,5 +1,6 @@
 package com.example.genshinassistant.data.repository
 
+import com.example.genshinassistant.data.model.Character
 import com.example.genshinassistant.data.dao.CharacterDao
 import kotlinx.coroutines.flow.Flow
 
@@ -12,7 +13,7 @@ class CharacterRepository(private val characterDao: CharacterDao) {
         return characterDao.getCharacters()
     }
 
-    suspend fun getCharacterByNameFromRoom(name: String): Character {
+    fun getCharacterByNameFromRoom(name: String): Character {
         return characterDao.getCharacterByName(name)
     }
 
