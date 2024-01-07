@@ -17,7 +17,7 @@ class CharacterRepository(private val characterDao: CharacterDao) {
         return characterDao.getCharacterByName(name)
     }
 
-    suspend fun addCharacterToRoom(character: Character): String {
+    suspend fun addCharacterToRoom(character: Character) {
         return characterDao.addCharacter(character)
     }
 

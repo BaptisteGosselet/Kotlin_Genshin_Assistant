@@ -10,13 +10,16 @@ data class Character(
     val affiliation: String,
     val birthday: String,
     val constellation: String,
-    val constellations: List<Constellation>,
+    // Liste des id des constellations
+    //val constellations: List<Int>,
     val description: String,
     val name: String,
     val nation: String,
-    val passiveTalents: List<PassiveTalent>,
+    // Liste des id des passives talents
+    //val passiveTalents: List<Int>,
     val rarity: Int,
-    val skillTalents: List<SkillTalent>,
+    // Liste des id des skills talents
+    //val skillTalents: List<Int>,
     val title: String,
     val vision: String,
     val vision_key: String,

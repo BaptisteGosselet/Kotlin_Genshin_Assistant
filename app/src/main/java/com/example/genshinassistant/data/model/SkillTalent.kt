@@ -7,9 +7,10 @@ import com.example.genshinassistant.Utils.Companion.SKILL_TALENT_TABLE
 @Entity(tableName = SKILL_TALENT_TABLE)
 data class SkillTalent(
     @PrimaryKey(autoGenerate = true)
+    val id: Int,
     val description: String,
     val name: String,
     val type: String,
     val unlock: String,
-    val upgrades: List<Upgrade>
+    //val upgrades: List<Upgrade>
 )
