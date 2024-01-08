@@ -44,7 +44,7 @@ fun AppContent(navController: NavHostController, characterListViewModel: Charact
                     FavoritesScreen(characterRoomViewModel = characterRoomViewModel, navController = navController)
                 }
                 composable(RouteNames.details + "/{nameId}", arguments = listOf(navArgument("nameId") { type = NavType.StringType })) { backStackEntry ->
-                    DetailPage(nameId = backStackEntry.arguments?.getString("nameId").toString())
+                    DetailPage(nameId = backStackEntry.arguments?.getString("nameId").toString(), characterRoomViewModel)
                 }
             }
         }

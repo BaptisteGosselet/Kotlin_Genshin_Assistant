@@ -25,6 +25,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -37,15 +38,17 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.example.genshinassistant.R
+import com.example.genshinassistant.viewModels.CharacterRoomViewModel
 import com.example.genshinassistant.viewModels.DetailViewModel
+import kotlinx.coroutines.launch
 import org.intellij.lang.annotations.JdkConstants.HorizontalAlignment
 
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun DetailPage(nameId:String) {
+fun DetailPage(nameId:String, characterRoomViewModel: CharacterRoomViewModel) {
 
-    val vm: DetailViewModel = remember { DetailViewModel(nameId) }
+    val vm: DetailViewModel = remember { DetailViewModel(nameId, characterRoomViewModel) }
 
     val skillTalents : List<DetailListElement> = listOf(
         DetailListElement(iconUrl = "https://api.genshin.dev/characters/$nameId/talent-na", title = vm.character.value?.skillTalents?.get(0)?.name.toString(), description = vm.character.value?.skillTalents?.get(0)?.description.toString()),
@@ -119,6 +122,7 @@ fun DetailPage(nameId:String) {
                                     modifier = Modifier.fillMaxHeight(),
                                     verticalArrangement = Arrangement.Bottom
                                 ) {
+                                    val scope = rememberCoroutineScope()
                                     Icon(
                                         painter = painterResource(R.drawable.bookmark_add),
                                         contentDescription = "Favorites",
@@ -126,7 +130,11 @@ fun DetailPage(nameId:String) {
                                         modifier = Modifier
                                             .size(45.dp)
                                             .offset(x = 5.dp, y = (-5).dp)
-                                            .clickable { vm.addToFavorite(nameId) }
+                                            .clickable {
+                                                scope.launch {
+                                                    vm.addToFavorite(nameId)
+                                                }
+                                            }
                                     )
                                 }
                             }
