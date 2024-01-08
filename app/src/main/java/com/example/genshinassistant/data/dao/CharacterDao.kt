@@ -15,8 +15,8 @@ interface CharacterDao {
     @Query("SELECT * FROM $CHARACTER_TABLE")
     fun getCharacters(): Flow<Characters>
 
-    @Query("SELECT * FROM $CHARACTER_TABLE WHERE name = :name")
-    fun getCharacterByName(name: String): Character
+    @Query("SELECT * FROM $CHARACTER_TABLE WHERE nameId = :nameId")
+    fun getCharacterByName(nameId: String): Character
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun addCharacter(character: Character) : Long

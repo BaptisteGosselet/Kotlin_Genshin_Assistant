@@ -62,7 +62,7 @@ abstract class CharacterDataBase : RoomDatabase() {
                     val characterDao = database.characterDao()
                     characterDao.deleteAllCharacters()
                     val initialCharacters = listOf(
-                        Character(0, "", "", "", "", "", "", 0, "", "", "", "", "")
+                        Character(0, "", "", "", "", "", "", "", 0, "", "", "", "", "")
                     )
                     characterDao.addCharacter(initialCharacters[0])
                     val constellationDao = database.constellationDao()

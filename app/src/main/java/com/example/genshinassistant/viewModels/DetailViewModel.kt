@@ -1,6 +1,7 @@
 package com.example.genshinassistant.viewModels
 
 import android.util.Log
+import android.widget.Toast
 import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -38,6 +39,7 @@ class DetailViewModel(nameId:String, characterRoomViewModel: CharacterRoomViewMo
     }
 
     suspend fun addToFavorite(nameId: String){
+        characterRoomViewModel.character.nameId = nameId
         characterRoomViewModel.character.affiliation = character.value?.affiliation.toString()
         characterRoomViewModel.character.birthday = character.value?.birthday.toString()
         characterRoomViewModel.character.constellation = character.value?.constellation.toString()
@@ -93,7 +95,6 @@ class DetailViewModel(nameId:String, characterRoomViewModel: CharacterRoomViewMo
                 characterRoomViewModel.addUpgrade(characterRoomViewModel.upgrade)
             }*/
         }
-
 
         Log.d("bapt", "addToFavorite($c) + $characterId")
         //Log.d("bapt", "character($character)")

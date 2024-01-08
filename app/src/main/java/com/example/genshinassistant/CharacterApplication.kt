@@ -1,6 +1,7 @@
 package com.example.genshinassistant
 
 import android.app.Application
+import android.content.Context
 import com.example.genshinassistant.data.dao.CharacterDao
 import com.example.genshinassistant.data.dao.ConstellationDao
 import com.example.genshinassistant.data.dao.PassiveTalentDao

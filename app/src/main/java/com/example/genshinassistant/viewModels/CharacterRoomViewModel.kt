@@ -19,7 +19,7 @@ class CharacterRoomViewModel(private val repository: CharacterRepository) : View
     var characters: Flow<Characters> = repository.getAllCharactersFromRoom()
 
     // un character pour utiliser add et delete
-    var character by mutableStateOf(Character(0, "", "", "", "", "", "", 0, "", "", "", "", ""))
+    var character by mutableStateOf(Character(0, "", "", "", "", "", "", "", 0, "", "", "", "", ""))
 
     // une constellations pour utiliser add et delete
     var constellation by mutableStateOf(Constellation(0, "", 0, "", "", 0))

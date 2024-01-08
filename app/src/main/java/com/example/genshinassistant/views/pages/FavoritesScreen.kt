@@ -48,7 +48,7 @@ fun FavoritesScreen(characterRoomViewModel: CharacterRoomViewModel, navControlle
             items(characters){
                     character ->
                 CharacterCardGridView(
-                    nameId = "",
+                    nameId = character.nameId.toString(),
                     name = character.name.toString(),
                     vision = character.vision.toString(),
                     navController = navController)
