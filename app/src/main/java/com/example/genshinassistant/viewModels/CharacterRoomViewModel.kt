@@ -41,6 +41,22 @@ class CharacterRoomViewModel(private val repository: CharacterRepository) : View
         return repository.addCharacterToRoom(character)
     }
 
+    suspend fun addConstellation(constellation: Constellation) : Long {
+        return repository.addConstellationToRoom(constellation)
+    }
+
+    suspend fun addPassiveTalent(passiveTalent: PassiveTalent) : Long {
+        return repository.addPassiveTalentToRoom(passiveTalent)
+    }
+
+    suspend fun addSkillTalent(skillTalent: SkillTalent) : Long {
+        return repository.addSkillTalentToRoom(skillTalent)
+    }
+
+    suspend fun addUpgrade(upgrade: Upgrade) : Long {
+        return repository.addUpgradeToRoom(upgrade)
+    }
+
     suspend fun deleteCharacter(character: Character) {
         repository.deleteCharacterFromRoom(character)
     }

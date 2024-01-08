@@ -52,8 +52,51 @@ class DetailViewModel(nameId:String, characterRoomViewModel: CharacterRoomViewMo
         characterRoomViewModel.character.weapon_type = character.value?.weapon_type.toString()
 
         val c = characterRoomViewModel.character
-        val i : Long = characterRoomViewModel.addCharacter(c)
-        Log.d("bapt", "addToFavorite($c) + $i")
+        val characterId : Long = characterRoomViewModel.addCharacter(c)
+
+        val constellations = character.value?.constellations
+        for (constellation in constellations!!) {
+            characterRoomViewModel.constellation.description = constellation.description.toString()
+            characterRoomViewModel.constellation.level = constellation.level?.toInt()!!
+            characterRoomViewModel.constellation.name = constellation.name.toString()
+            characterRoomViewModel.constellation.unlock = constellation.unlock.toString()
+            characterRoomViewModel.constellation.character_id = characterId.toInt()
+            characterRoomViewModel.addConstellation(characterRoomViewModel.constellation)
+        }
+
+        val passiveTalents = character.value?.passiveTalents
+        for (passiveTalent in passiveTalents!!) {
+            characterRoomViewModel.passiveTalent.description = passiveTalent.description.toString()
+            characterRoomViewModel.passiveTalent.level = passiveTalent.level?.toInt() ?: 0
+            characterRoomViewModel.passiveTalent.name = passiveTalent.name.toString()
+            characterRoomViewModel.passiveTalent.unlock = passiveTalent.unlock.toString()
+            characterRoomViewModel.passiveTalent.character_id = characterId.toInt()
+            characterRoomViewModel.addPassiveTalent(characterRoomViewModel.passiveTalent)
+        }
+
+        val skillTalents = character.value?.skillTalents
+        var upgrades = skillTalents?.get(0)?.upgrades
+        for (skillTalent in skillTalents!!) {
+            characterRoomViewModel.skillTalent.description = skillTalent.description.toString()
+            characterRoomViewModel.skillTalent.name = skillTalent.name.toString()
+            characterRoomViewModel.skillTalent.type = skillTalent.type.toString()
+            characterRoomViewModel.skillTalent.unlock = skillTalent.unlock.toString()
+            characterRoomViewModel.skillTalent.character_id = characterId.toInt()
+            val skillTalentId = characterRoomViewModel.addSkillTalent(characterRoomViewModel.skillTalent)
+
+            /*upgrades = skillTalent.upgrades
+            Log.d("bapt", "upgrades($skillTalent)")
+            for (upgrade in upgrades!!) {
+                characterRoomViewModel.upgrade.name = upgrade.name.toString()
+                characterRoomViewModel.upgrade.value = upgrade.value.toString()
+                characterRoomViewModel.upgrade.skillTalent_id = skillTalentId.toInt()
+                characterRoomViewModel.addUpgrade(characterRoomViewModel.upgrade)
+            }*/
+        }
+
+
+        Log.d("bapt", "addToFavorite($c) + $characterId")
+        //Log.d("bapt", "character($character)")
     }
 
 }

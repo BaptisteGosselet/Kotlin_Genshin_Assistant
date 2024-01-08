@@ -8,9 +8,9 @@ import com.example.genshinassistant.Utils.Companion.CONSTELLATION_TABLE
 data class Constellation(
     @PrimaryKey(autoGenerate = true)
     val id: Int,
-    val description: String,
-    val level: Int,
-    val name: String,
-    val unlock: String,
-    val character_id: Int
+    var description: String,
+    var level: Int,
+    var name: String,
+    var unlock: String,
+    var character_id: Int
 )

@@ -8,7 +8,7 @@ import com.example.genshinassistant.Utils.Companion.UPGRADE_TABLE
 data class Upgrade(
     @PrimaryKey(autoGenerate = true)
     val id: Int,
-    val name: String,
-    val value: String,
-    val skillTalent_id: Int
+    var name: String,
+    var value: String,
+    var skillTalent_id: Int
 )

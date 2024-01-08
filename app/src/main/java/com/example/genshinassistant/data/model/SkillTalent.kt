@@ -8,9 +8,9 @@ import com.example.genshinassistant.Utils.Companion.SKILL_TALENT_TABLE
 data class SkillTalent(
     @PrimaryKey(autoGenerate = true)
     val id: Int,
-    val description: String,
-    val name: String,
-    val type: String,
-    val unlock: String,
-    val character_id: Int
+    var description: String,
+    var name: String,
+    var type: String,
+    var unlock: String,
+    var character_id: Int
 )
