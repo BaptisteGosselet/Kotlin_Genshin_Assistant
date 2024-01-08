@@ -9,5 +9,6 @@ data class Upgrade(
     @PrimaryKey(autoGenerate = true)
     val id: Int,
     val name: String,
-    val value: String
+    val value: String,
+    val skillTalent_id: Int
 )

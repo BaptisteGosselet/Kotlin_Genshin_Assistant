@@ -52,8 +52,8 @@ class DetailViewModel(nameId:String, characterRoomViewModel: CharacterRoomViewMo
         characterRoomViewModel.character.weapon_type = character.value?.weapon_type.toString()
 
         val c = characterRoomViewModel.character
-        characterRoomViewModel.addCharacter(c)
-        Log.d("bapt", "addToFavorite($c)")
+        val i : Long = characterRoomViewModel.addCharacter(c)
+        Log.d("bapt", "addToFavorite($c) + $i")
     }
 
 }

@@ -19,7 +19,7 @@ interface CharacterDao {
     fun getCharacterByName(name: String): Character
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun addCharacter(character: Character)
+    suspend fun addCharacter(character: Character) : Long
 
     @Delete
     suspend fun deleteCharacter(character: Character)

@@ -12,5 +12,5 @@ data class SkillTalent(
     val name: String,
     val type: String,
     val unlock: String,
-    //val upgrades: List<Upgrade>
+    val character_id: Int
 )

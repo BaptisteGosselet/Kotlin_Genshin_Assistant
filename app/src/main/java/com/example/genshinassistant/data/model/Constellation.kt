@@ -11,5 +11,6 @@ data class Constellation(
     val description: String,
     val level: Int,
     val name: String,
-    val unlock: String
+    val unlock: String,
+    val character_id: Int
 )

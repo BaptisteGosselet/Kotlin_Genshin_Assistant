@@ -8,6 +8,10 @@ import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.example.genshinassistant.Utils.Companion.CHARACTER_DATABASE
 import com.example.genshinassistant.data.dao.CharacterDao
+import com.example.genshinassistant.data.dao.ConstellationDao
+import com.example.genshinassistant.data.dao.PassiveTalentDao
+import com.example.genshinassistant.data.dao.SkillTalentDao
+import com.example.genshinassistant.data.dao.UpgradeDao
 import com.example.genshinassistant.data.model.Character
 import com.example.genshinassistant.data.model.Constellation
 import com.example.genshinassistant.data.model.Upgrade
@@ -23,6 +27,10 @@ import kotlinx.coroutines.launch
 )
 abstract class CharacterDataBase : RoomDatabase() {
     abstract fun characterDao(): CharacterDao
+    abstract fun constellationDao(): ConstellationDao
+    abstract fun passiveTalentDao(): PassiveTalentDao
+    abstract fun skillTalentDao(): SkillTalentDao
+    abstract fun upgradeDao(): UpgradeDao
 
     companion object {
         @Volatile
@@ -49,7 +57,6 @@ abstract class CharacterDataBase : RoomDatabase() {
     class CharacterDataBaseCallback : RoomDatabase.Callback() {
         override fun onCreate(db: SupportSQLiteDatabase) {
             super.onCreate(db)
-            Log.d("BDD", "onCreate")
             instance?.let { database ->
                 CoroutineScope(Dispatchers.IO).launch {
                     val characterDao = database.characterDao()
@@ -58,6 +65,30 @@ abstract class CharacterDataBase : RoomDatabase() {
                         Character(0, "", "", "", "", "", "", 0, "", "", "", "", "")
                     )
                     characterDao.addCharacter(initialCharacters[0])
+                    val constellationDao = database.constellationDao()
+                    constellationDao.deleteAllConstellations()
+                    val initialConstellation = listOf(
+                        Constellation(0, "", 0, "", "", 0)
+                    )
+                    constellationDao.addConstellation(initialConstellation[0])
+                    val passiveTalentDao = database.passiveTalentDao()
+                    passiveTalentDao.deleteAllPassiveTalents()
+                    val initialPassiveTalents = listOf(
+                        PassiveTalent(0, "", 0, "", "", 0)
+                    )
+                    passiveTalentDao.addPassiveTalent(initialPassiveTalents[0])
+                    val skillTalentDao = database.skillTalentDao()
+                    skillTalentDao.deleteAllSkillTalents()
+                    val initialSkillTalents = listOf(
+                        SkillTalent(0, "", "", "", "", 0)
+                    )
+                    skillTalentDao.addSkillTalent(initialSkillTalents[0])
+                    val upgradeDao = database.upgradeDao()
+                    upgradeDao.deleteAllUpgrades()
+                    val initialUpgrades = listOf(
+                        Upgrade(0, "", "", 0)
+                    )
+                    upgradeDao.addUpgrade(initialUpgrades[0])
                 }
             }
         }
