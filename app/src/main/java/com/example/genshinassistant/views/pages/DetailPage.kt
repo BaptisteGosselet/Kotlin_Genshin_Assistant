@@ -2,6 +2,7 @@ package com.example.genshinassistant.views
 
 
 import android.content.Context
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
@@ -58,8 +59,8 @@ fun DetailPage(nameId:String, characterRoomViewModel: CharacterRoomViewModel) {
     val vm: DetailViewModel = remember { DetailViewModel(nameId, characterRoomViewModel) }
     val context = LocalContext.current
 
-    var state by remember { mutableStateOf(false) }
-    //var bookmarkIcon by remember { mutableIntStateOf(if (vm.isFavorite.value) R.drawable.bookmark_added else R.drawable.bookmark_add) }
+    var state by remember { mutableStateOf(vm.isFavorite.value) }
+    Log.d("bapt", "DetailPageeeee($nameId) + ${vm.isFavorite.value}}")
 
     val skillTalents : List<DetailListElement> = listOf(
         DetailListElement(iconUrl = "https://api.genshin.dev/characters/$nameId/talent-na", title = vm.character.value?.skillTalents?.get(0)?.name.toString(), description = vm.character.value?.skillTalents?.get(0)?.description.toString()),
@@ -172,7 +173,7 @@ fun DetailPage(nameId:String, characterRoomViewModel: CharacterRoomViewModel) {
                                     modifier = Modifier.padding(25.dp, 35.dp, 20.dp, 20.dp)
                                 ) {
                                     Text(
-                                        text = vm.character.value?.name.toString(),
+                                        text = vm.character.value?.name.toString() + state.toString(),
                                         fontSize = 36.sp,
                                         fontWeight = FontWeight.Bold,
                                         color = Color(android.graphics.Color.parseColor("#6F6972")),

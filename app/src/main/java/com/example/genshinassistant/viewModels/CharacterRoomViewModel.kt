@@ -72,6 +72,23 @@ class CharacterRoomViewModel(private val repository: CharacterRepository) : View
         repository.deleteCharacterFromRoom(character)
     }
 
+    suspend fun deleteConstellationByCharacterId(characterId: Int) {
+        repository.deleteConstellationByCharacterIdFromRoom(characterId)
+    }
+
+    suspend fun deletePassiveTalentByCharacterId(characterId: Int) {
+        repository.deletePassiveTalentByCharacterIdFromRoom(characterId)
+    }
+
+    suspend fun deleteSkillTalentByCharacterId(characterId: Int) {
+        repository.deleteSkillTalentByCharacterIdFromRoom(characterId)
+    }
+
+    suspend fun deleteUpgradeBySkillTalentId(skillTalentId: Int) {
+        repository.deleteUpgradeBySkillTalentIdFromRoom(skillTalentId)
+    }
+
+
     class CharacterRoomViewModelFactory(private val repository: CharacterRepository) : ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             if (modelClass.isAssignableFrom(CharacterRoomViewModel::class.java)) {

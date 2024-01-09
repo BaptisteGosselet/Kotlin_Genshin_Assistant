@@ -45,12 +45,20 @@ class CharacterRepository(private val characterDao: CharacterDao,
         constellationDao.addAllConstellations(constellations)
     }
 
+    suspend fun deleteConstellationByCharacterIdFromRoom(characterId: Int) {
+        constellationDao.deleteConstellationByCharacterId(characterId)
+    }
+
     suspend fun addPassiveTalentToRoom(passiveTalent: PassiveTalent) : Long {
         return PassiveTalentDao.addPassiveTalent(passiveTalent)
     }
 
     suspend fun addAllPassiveTalentsToRoom(passiveTalents: List<PassiveTalent>) {
         PassiveTalentDao.addAllPassiveTalents(passiveTalents)
+    }
+
+    suspend fun deletePassiveTalentByCharacterIdFromRoom(characterId: Int) {
+        PassiveTalentDao.deletePassiveTalentByCharacterId(characterId)
     }
 
     suspend fun addSkillTalentToRoom(skillTalent: SkillTalent) : Long {
@@ -61,12 +69,20 @@ class CharacterRepository(private val characterDao: CharacterDao,
         skillTalentDao.addAllSkillTalents(skillTalents)
     }
 
+    suspend fun deleteSkillTalentByCharacterIdFromRoom(characterId: Int) {
+        skillTalentDao.deleteSkillTalentByCharacterId(characterId)
+    }
+
     suspend fun addUpgradeToRoom(upgrade: Upgrade) : Long {
         return UpgradeDao.addUpgrade(upgrade)
     }
 
     suspend fun addAllUpgradesToRoom(upgrades: List<Upgrade>) {
         UpgradeDao.addAllUpgrades(upgrades)
+    }
+
+    suspend fun deleteUpgradeBySkillTalentIdFromRoom(skillTalentId: Int) {
+        UpgradeDao.deleteUpgradeBySkillTalentId(skillTalentId)
     }
 
 }

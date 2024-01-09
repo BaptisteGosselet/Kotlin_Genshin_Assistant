@@ -12,7 +12,9 @@ import androidx.lifecycle.viewModelScope
 import com.example.genshinassistant.CharacterApplication
 import com.example.genshinassistant.models.Character
 import com.example.genshinassistant.repository.UseCase
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class DetailViewModel(nameId:String, characterRoomViewModel: CharacterRoomViewModel) : ViewModel() {
 
@@ -34,17 +36,21 @@ class DetailViewModel(nameId:String, characterRoomViewModel: CharacterRoomViewMo
     private fun loadCharacter(nameId: String) {
         viewModelScope.launch {
             try {
-                _character.value = useCase.getCharacterByName(nameId);
                 _isFavorite.value = characterAlreadyInFavorite(nameId);
+
+                _character.value = useCase.getCharacterByName(nameId);
+
+                Log.d("bapt", "loadCharacter($nameId) + ${isFavorite.value}}")
             } catch (e: Exception) {
                 errorMessage = e.message.toString()
+                Log.d("bapt", "ERROR ${e.message.toString()}}")
             }
         }
     }
 
     suspend fun addToFavorite(nameId: String):Boolean{
-        if (isFavorite.value) {
-            Log.d("bapt", "characterAlreadyInFavorite($nameId)")
+        if (characterAlreadyInFavorite(nameId)) {
+            Log.d("bapt", "characterAlreadyInFavorite($nameId) + ${isFavorite.value}}")
             return false
         }
 
@@ -106,13 +112,33 @@ class DetailViewModel(nameId:String, characterRoomViewModel: CharacterRoomViewMo
         }
 
         Log.d("bapt", "addToFavorite($c) + $characterId")
-        //_isFavorite.value = true
+        _isFavorite.value = true
         return true
     }
 
+    //  Delete a character from the database
+    suspend fun deleteFromFavorite(nameId: String) {
+        characterRoomViewModel.deleteSkillTalentByCharacterId(characterRoomViewModel.character.id)
+        characterRoomViewModel.deletePassiveTalentByCharacterId(characterRoomViewModel.character.id)
+        characterRoomViewModel.deleteConstellationByCharacterId(characterRoomViewModel.character.id)
+        characterRoomViewModel.deleteCharacter(characterRoomViewModel.character)
+
+        _isFavorite.value = false
+    }
+
     private fun characterAlreadyInFavorite(nameId: String): Boolean {
-        val character = characterRoomViewModel.getCharacterByName(nameId)
-        return character.nameId == nameId
+        var res = false
+        viewModelScope.launch {
+            try {
+                val character = characterRoomViewModel.getCharacterByName(nameId)
+                res = character.nameId == nameId
+                _isFavorite.value = res
+            } catch (e: Exception) {
+                errorMessage = e.message.toString()
+                Log.d("bapt", "ERRORRRR ${e.message.toString()}}")
+            }
+        }
+        return res
     }
 
 }
