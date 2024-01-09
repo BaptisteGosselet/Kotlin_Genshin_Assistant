@@ -1,6 +1,8 @@
 package com.example.genshinassistant.views
 
 
+import android.content.Context
+import android.widget.Toast
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -24,14 +26,19 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.HorizontalAlignmentLine
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -49,6 +56,10 @@ import org.intellij.lang.annotations.JdkConstants.HorizontalAlignment
 fun DetailPage(nameId:String, characterRoomViewModel: CharacterRoomViewModel) {
 
     val vm: DetailViewModel = remember { DetailViewModel(nameId, characterRoomViewModel) }
+    val context = LocalContext.current
+
+    var state by remember { mutableStateOf(false) }
+    //var bookmarkIcon by remember { mutableIntStateOf(if (vm.isFavorite.value) R.drawable.bookmark_added else R.drawable.bookmark_add) }
 
     val skillTalents : List<DetailListElement> = listOf(
         DetailListElement(iconUrl = "https://api.genshin.dev/characters/$nameId/talent-na", title = vm.character.value?.skillTalents?.get(0)?.name.toString(), description = vm.character.value?.skillTalents?.get(0)?.description.toString()),
@@ -124,15 +135,17 @@ fun DetailPage(nameId:String, characterRoomViewModel: CharacterRoomViewModel) {
                                 ) {
                                     val scope = rememberCoroutineScope()
                                     Icon(
-                                        painter = painterResource(R.drawable.bookmark_add),
+                                        painter = painterResource(id = if (state) R.drawable.bookmark_added else R.drawable.bookmark_add),
                                         contentDescription = "Favorites",
-                                        tint = Color.White,
+                                        tint = (if (state) Color(android.graphics.Color.parseColor("#1AA7CE")) else Color(android.graphics.Color.parseColor("#FFFFFF"))),
                                         modifier = Modifier
                                             .size(45.dp)
                                             .offset(x = 5.dp, y = (-5).dp)
                                             .clickable {
                                                 scope.launch {
                                                     vm.addToFavorite(nameId)
+                                                    favoriteMessage(nameId, state, context)
+                                                    state = !state
                                                 }
                                             }
                                     )
@@ -217,3 +230,9 @@ fun DetailPage(nameId:String, characterRoomViewModel: CharacterRoomViewModel) {
     }
 }
 
+fun favoriteMessage(nameId: String, state:Boolean, context : Context) {
+    if (state)
+        Toast.makeText(context, "Character $nameId removed from favorites", Toast.LENGTH_SHORT).show()
+    else
+        Toast.makeText(context, "Character $nameId added to favorites", Toast.LENGTH_SHORT).show()
+}

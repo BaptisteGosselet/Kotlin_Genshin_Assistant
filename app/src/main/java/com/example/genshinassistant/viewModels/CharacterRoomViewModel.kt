@@ -5,6 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
 import com.example.genshinassistant.data.model.Character
 import com.example.genshinassistant.data.model.Constellation
 import com.example.genshinassistant.data.model.PassiveTalent
@@ -13,6 +14,7 @@ import com.example.genshinassistant.data.model.Upgrade
 import com.example.genshinassistant.data.repository.CharacterRepository
 import com.example.genshinassistant.data.repository.Characters
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.launch
 
 class CharacterRoomViewModel(private val repository: CharacterRepository) : ViewModel() {
 
@@ -34,7 +36,16 @@ class CharacterRoomViewModel(private val repository: CharacterRepository) : View
     var upgrade by mutableStateOf(Upgrade(0, "", "", 0))
 
     fun getCharacterByName(name: String): Character {
-        return repository.getCharacterByNameFromRoom(name)
+        viewModelScope.launch {
+            try{
+                character = repository.getCharacterByNameFromRoom(name)
+            }
+            catch (e: Exception){
+                println(e.message.toString())
+            }
+
+        }
+        return character
     }
 
     suspend fun addCharacter(character: Character) : Long {

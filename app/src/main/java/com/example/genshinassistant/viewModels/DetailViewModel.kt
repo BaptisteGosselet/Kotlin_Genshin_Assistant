@@ -24,6 +24,9 @@ class DetailViewModel(nameId:String, characterRoomViewModel: CharacterRoomViewMo
     private var _character = mutableStateOf<Character?>(null);
     val character: State<Character?> = _character;
 
+    private var _isFavorite = mutableStateOf<Boolean>(false);
+    val isFavorite: State<Boolean> = _isFavorite;
+
     init {
         loadCharacter(nameId);
     }
@@ -32,13 +35,19 @@ class DetailViewModel(nameId:String, characterRoomViewModel: CharacterRoomViewMo
         viewModelScope.launch {
             try {
                 _character.value = useCase.getCharacterByName(nameId);
+                _isFavorite.value = characterAlreadyInFavorite(nameId);
             } catch (e: Exception) {
                 errorMessage = e.message.toString()
             }
         }
     }
 
-    suspend fun addToFavorite(nameId: String){
+    suspend fun addToFavorite(nameId: String):Boolean{
+        if (isFavorite.value) {
+            Log.d("bapt", "characterAlreadyInFavorite($nameId)")
+            return false
+        }
+
         characterRoomViewModel.character.nameId = nameId
         characterRoomViewModel.character.affiliation = character.value?.affiliation.toString()
         characterRoomViewModel.character.birthday = character.value?.birthday.toString()
@@ -97,7 +106,13 @@ class DetailViewModel(nameId:String, characterRoomViewModel: CharacterRoomViewMo
         }
 
         Log.d("bapt", "addToFavorite($c) + $characterId")
-        //Log.d("bapt", "character($character)")
+        //_isFavorite.value = true
+        return true
+    }
+
+    private fun characterAlreadyInFavorite(nameId: String): Boolean {
+        val character = characterRoomViewModel.getCharacterByName(nameId)
+        return character.nameId == nameId
     }
 
 }
