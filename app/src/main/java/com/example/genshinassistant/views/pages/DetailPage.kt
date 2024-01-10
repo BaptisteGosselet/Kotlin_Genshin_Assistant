@@ -60,7 +60,6 @@ fun DetailPage(nameId:String, characterRoomViewModel: CharacterRoomViewModel) {
     val context = LocalContext.current
 
     var state by remember { mutableStateOf(vm.isFavorite.value) }
-    Log.d("bapt", "DetailPageeeee($nameId) + ${vm.isFavorite.value}}")
 
     val skillTalents : List<DetailListElement> = listOf(
         DetailListElement(iconUrl = "https://api.genshin.dev/characters/$nameId/talent-na", title = vm.character.value?.skillTalents?.get(0)?.name.toString(), description = vm.character.value?.skillTalents?.get(0)?.description.toString()),
@@ -144,7 +143,10 @@ fun DetailPage(nameId:String, characterRoomViewModel: CharacterRoomViewModel) {
                                             .offset(x = 5.dp, y = (-5).dp)
                                             .clickable {
                                                 scope.launch {
-                                                    vm.addToFavorite(nameId)
+                                                    if (state)
+                                                        vm.deleteFromFavorite(nameId)
+                                                    else
+                                                        vm.addToFavorite(nameId)
                                                     favoriteMessage(nameId, state, context)
                                                     state = !state
                                                 }
@@ -173,7 +175,7 @@ fun DetailPage(nameId:String, characterRoomViewModel: CharacterRoomViewModel) {
                                     modifier = Modifier.padding(25.dp, 35.dp, 20.dp, 20.dp)
                                 ) {
                                     Text(
-                                        text = vm.character.value?.name.toString() + state.toString(),
+                                        text = vm.character.value?.name.toString(),
                                         fontSize = 36.sp,
                                         fontWeight = FontWeight.Bold,
                                         color = Color(android.graphics.Color.parseColor("#6F6972")),

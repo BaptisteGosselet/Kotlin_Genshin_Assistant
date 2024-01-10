@@ -37,13 +37,9 @@ class DetailViewModel(nameId:String, characterRoomViewModel: CharacterRoomViewMo
         viewModelScope.launch {
             try {
                 _isFavorite.value = characterAlreadyInFavorite(nameId);
-
                 _character.value = useCase.getCharacterByName(nameId);
-
-                Log.d("bapt", "loadCharacter($nameId) + ${isFavorite.value}}")
             } catch (e: Exception) {
                 errorMessage = e.message.toString()
-                Log.d("bapt", "ERROR ${e.message.toString()}}")
             }
         }
     }
@@ -118,6 +114,7 @@ class DetailViewModel(nameId:String, characterRoomViewModel: CharacterRoomViewMo
 
     //  Delete a character from the database
     suspend fun deleteFromFavorite(nameId: String) {
+        Log.d("bapt", "${characterRoomViewModel.character}")
         characterRoomViewModel.deleteSkillTalentByCharacterId(characterRoomViewModel.character.id)
         characterRoomViewModel.deletePassiveTalentByCharacterId(characterRoomViewModel.character.id)
         characterRoomViewModel.deleteConstellationByCharacterId(characterRoomViewModel.character.id)
@@ -135,7 +132,6 @@ class DetailViewModel(nameId:String, characterRoomViewModel: CharacterRoomViewMo
                 _isFavorite.value = res
             } catch (e: Exception) {
                 errorMessage = e.message.toString()
-                Log.d("bapt", "ERRORRRR ${e.message.toString()}}")
             }
         }
         return res
