@@ -1,20 +1,22 @@
 package com.example.genshinassistant
 
-import AppContent
+import com.example.genshinassistant.views.AppContent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.navigation.NavType
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
+import androidx.activity.viewModels
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.navArgument
+import com.example.genshinassistant.data.repository.CharacterRepository
 import com.example.genshinassistant.ui.theme.GenshinAssistantTheme
 import com.example.genshinassistant.viewModels.CharacterListViewModel
-import com.example.genshinassistant.views.DetailPage
+import com.example.genshinassistant.viewModels.CharacterRoomViewModel
 
 
 class MainActivity : ComponentActivity() {
+    val characterRoomViewModel: CharacterRoomViewModel by viewModels {
+        CharacterRoomViewModel.CharacterRoomViewModelFactory((application as CharacterApplication).repository)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -22,7 +24,7 @@ class MainActivity : ComponentActivity() {
                 val characterListViewModel = CharacterListViewModel()
                 val navController = rememberNavController()
 
-                AppContent(navController = navController, characterListViewModel = characterListViewModel)
+                AppContent(navController = navController, characterListViewModel = characterListViewModel, characterRoomViewModel = characterRoomViewModel)
 
             }
         }

@@ -1,4 +1,4 @@
-package com.example.genshinassistant.views
+package com.example.genshinassistant.views.pages
 
 
 import android.util.Log

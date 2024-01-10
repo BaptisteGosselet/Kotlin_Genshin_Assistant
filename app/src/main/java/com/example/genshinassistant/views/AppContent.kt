@@ -1,3 +1,5 @@
+package com.example.genshinassistant.views
+
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
@@ -13,16 +15,14 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.example.genshinassistant.navigation.RouteNames
 import com.example.genshinassistant.viewModels.CharacterListViewModel
-import com.example.genshinassistant.views.DetailPage
-import com.example.genshinassistant.views.GridList
-import com.example.genshinassistant.views.RowList
+import com.example.genshinassistant.viewModels.CharacterRoomViewModel
 import com.example.genshinassistant.views.components.NavigationTopBar
 import com.example.genshinassistant.views.pages.FavoritesScreen
-import okhttp3.Route
+import com.example.genshinassistant.views.pages.GridList
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AppContent(navController: NavHostController, characterListViewModel: CharacterListViewModel) {
+fun AppContent(navController: NavHostController, characterListViewModel: CharacterListViewModel, characterRoomViewModel: CharacterRoomViewModel) {
     Scaffold(
         topBar = {
             NavigationTopBar(navController = navController)
@@ -41,10 +41,10 @@ fun AppContent(navController: NavHostController, characterListViewModel: Charact
                     RowList(characterListViewModel, navController)
                 }
                 composable(RouteNames.favorites) {
-                    FavoritesScreen()
+                    FavoritesScreen(characterRoomViewModel = characterRoomViewModel, navController = navController)
                 }
                 composable(RouteNames.details + "/{nameId}", arguments = listOf(navArgument("nameId") { type = NavType.StringType })) { backStackEntry ->
-                    DetailPage(nameId = backStackEntry.arguments?.getString("nameId").toString())
+                    DetailPage(nameId = backStackEntry.arguments?.getString("nameId").toString(), characterRoomViewModel)
                 }
             }
         }
