@@ -1,7 +1,6 @@
 package com.example.genshinassistant.data.dao
 
 import androidx.room.Dao
-import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import com.example.genshinassistant.Utils.Companion.CONSTELLATION_TABLE
