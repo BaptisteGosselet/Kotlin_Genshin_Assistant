@@ -1,11 +1,11 @@
 package com.example.genshinassistant.data.repository
 
-import com.example.genshinassistant.data.model.Character
 import com.example.genshinassistant.data.dao.CharacterDao
 import com.example.genshinassistant.data.dao.ConstellationDao
 import com.example.genshinassistant.data.dao.PassiveTalentDao
 import com.example.genshinassistant.data.dao.SkillTalentDao
 import com.example.genshinassistant.data.dao.UpgradeDao
+import com.example.genshinassistant.data.model.Character
 import com.example.genshinassistant.data.model.Constellation
 import com.example.genshinassistant.data.model.PassiveTalent
 import com.example.genshinassistant.data.model.SkillTalent

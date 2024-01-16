@@ -14,9 +14,9 @@ import com.example.genshinassistant.data.dao.SkillTalentDao
 import com.example.genshinassistant.data.dao.UpgradeDao
 import com.example.genshinassistant.data.model.Character
 import com.example.genshinassistant.data.model.Constellation
-import com.example.genshinassistant.data.model.Upgrade
 import com.example.genshinassistant.data.model.PassiveTalent
 import com.example.genshinassistant.data.model.SkillTalent
+import com.example.genshinassistant.data.model.Upgrade
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

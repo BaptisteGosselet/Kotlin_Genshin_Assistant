@@ -16,7 +16,6 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.genshinassistant.R
 import com.example.genshinassistant.navigation.IconResource
 import com.example.genshinassistant.navigation.RouteNames
-import okhttp3.Route
 
 @Composable
 fun NavigationTopBar(navController: NavController) {

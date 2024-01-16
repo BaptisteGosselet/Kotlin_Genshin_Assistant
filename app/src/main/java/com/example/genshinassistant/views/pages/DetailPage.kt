@@ -1,8 +1,7 @@
-package com.example.genshinassistant.views
+package com.example.genshinassistant.views.pages
 
 
 import android.content.Context
-import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
@@ -28,7 +27,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -38,7 +36,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.layout.HorizontalAlignmentLine
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -48,8 +45,9 @@ import coil.compose.AsyncImage
 import com.example.genshinassistant.R
 import com.example.genshinassistant.viewModels.CharacterRoomViewModel
 import com.example.genshinassistant.viewModels.DetailViewModel
+import com.example.genshinassistant.views.DetailList
+import com.example.genshinassistant.views.DetailListElement
 import kotlinx.coroutines.launch
-import org.intellij.lang.annotations.JdkConstants.HorizontalAlignment
 
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -61,26 +59,24 @@ fun DetailPage(nameId:String, characterRoomViewModel: CharacterRoomViewModel) {
 
     var state by remember { mutableStateOf(vm.isFavorite.value) }
 
-    val skillTalents : List<DetailListElement> = listOf(
-        DetailListElement(iconUrl = "https://api.genshin.dev/characters/$nameId/talent-na", title = vm.character.value?.skillTalents?.get(0)?.name.toString(), description = vm.character.value?.skillTalents?.get(0)?.description.toString()),
-        DetailListElement(iconUrl = "https://api.genshin.dev/characters/$nameId/talent-skill", title = vm.character.value?.skillTalents?.get(1)?.name.toString(), description = vm.character.value?.skillTalents?.get(1)?.description.toString()),
-        DetailListElement(iconUrl = "https://api.genshin.dev/characters/$nameId/talent-burst", title = vm.character.value?.skillTalents?.get(2)?.name.toString(), description = vm.character.value?.skillTalents?.get(2)?.description.toString())
-    )
+    val skillTalents = mutableListOf<DetailListElement>()
+    if((vm.character.value?.skillTalents?.size ?: 0) > 0) skillTalents.add(DetailListElement(iconUrl = "https://api.genshin.dev/characters/$nameId/talent-na",title = vm.character.value?.skillTalents?.get(0)?.name.toString(), description = vm.character.value?.skillTalents?.get(0)?.description.toString()))
+    if((vm.character.value?.skillTalents?.size ?: 0) > 1) skillTalents.add(DetailListElement(iconUrl = "https://api.genshin.dev/characters/$nameId/talent-skill",title = vm.character.value?.skillTalents?.get(1)?.name.toString(), description = vm.character.value?.skillTalents?.get(1)?.description.toString()))
+    if((vm.character.value?.skillTalents?.size ?: 0) > 2) skillTalents.add(DetailListElement(iconUrl = "https://api.genshin.dev/characters/$nameId/talent-burst",title = vm.character.value?.skillTalents?.get(2)?.name.toString(), description = vm.character.value?.skillTalents?.get(2)?.description.toString()))
 
-    val passiveTalents : List<DetailListElement> = listOf(
-        DetailListElement(iconUrl = "https://api.genshin.dev/characters/$nameId/talent-passive-0", title = vm.character.value?.passiveTalents?.get(0)?.name.toString(), description = vm.character.value?.passiveTalents?.get(0)?.description.toString()),
-        DetailListElement(iconUrl = "https://api.genshin.dev/characters/$nameId/talent-passive-1", title = vm.character.value?.passiveTalents?.get(1)?.name.toString(), description = vm.character.value?.passiveTalents?.get(1)?.description.toString()),
-        DetailListElement(iconUrl = "https://api.genshin.dev/characters/$nameId/talent-passive-2", title = vm.character.value?.passiveTalents?.get(2)?.name.toString(), description = vm.character.value?.passiveTalents?.get(2)?.description.toString())
-    )
+    val passiveTalents = mutableListOf<DetailListElement>()
+    if((vm.character.value?.passiveTalents?.size ?: 0) > 0) passiveTalents.add(DetailListElement(iconUrl = "https://api.genshin.dev/characters/$nameId/talent-passive-0", title = vm.character.value?.passiveTalents?.get(0)?.name.toString(), description = vm.character.value?.passiveTalents?.get(0)?.description.toString()))
+    if((vm.character.value?.passiveTalents?.size ?: 0) > 1) passiveTalents.add(DetailListElement(iconUrl = "https://api.genshin.dev/characters/$nameId/talent-passive-1", title = vm.character.value?.passiveTalents?.get(1)?.name.toString(), description = vm.character.value?.passiveTalents?.get(1)?.description.toString()))
+    if((vm.character.value?.passiveTalents?.size ?: 0) > 2) passiveTalents.add(DetailListElement(iconUrl = "https://api.genshin.dev/characters/$nameId/talent-passive-2", title = vm.character.value?.passiveTalents?.get(2)?.name.toString(), description = vm.character.value?.passiveTalents?.get(2)?.description.toString()))
 
-    val constellations : List<DetailListElement> = listOf(
-        DetailListElement(iconUrl = "https://api.genshin.dev/characters/$nameId/constellation-1", title = vm.character.value?.constellations?.get(0)?.name.toString(), description = vm.character.value?.constellations?.get(0)?.description.toString()),
-        DetailListElement(iconUrl = "https://api.genshin.dev/characters/$nameId/constellation-2", title = vm.character.value?.constellations?.get(1)?.name.toString(), description = vm.character.value?.constellations?.get(1)?.description.toString()),
-        DetailListElement(iconUrl = "https://api.genshin.dev/characters/$nameId/constellation-3", title = vm.character.value?.constellations?.get(2)?.name.toString(), description = vm.character.value?.constellations?.get(2)?.description.toString()),
-        DetailListElement(iconUrl = "https://api.genshin.dev/characters/$nameId/constellation-4", title = vm.character.value?.constellations?.get(3)?.name.toString(), description = vm.character.value?.constellations?.get(3)?.description.toString()),
-        DetailListElement(iconUrl = "https://api.genshin.dev/characters/$nameId/constellation-5", title = vm.character.value?.constellations?.get(4)?.name.toString(), description = vm.character.value?.constellations?.get(4)?.description.toString()),
-        DetailListElement(iconUrl = "https://api.genshin.dev/characters/$nameId/constellation-6", title = vm.character.value?.constellations?.get(5)?.name.toString(), description = vm.character.value?.constellations?.get(5)?.description.toString())
-    )
+    val constellations = mutableListOf<DetailListElement>()
+    if((vm.character.value?.constellations?.size ?: 0) > 0) constellations.add(DetailListElement(iconUrl = "https://api.genshin.dev/characters/$nameId/constellation-1", title = vm.character.value?.constellations?.get(0)?.name.toString(), description = vm.character.value?.constellations?.get(0)?.description.toString()))
+    if((vm.character.value?.constellations?.size ?: 0) > 1) constellations.add(DetailListElement(iconUrl = "https://api.genshin.dev/characters/$nameId/constellation-2", title = vm.character.value?.constellations?.get(1)?.name.toString(), description = vm.character.value?.constellations?.get(1)?.description.toString()))
+    if((vm.character.value?.constellations?.size ?: 0) > 2) constellations.add(DetailListElement(iconUrl = "https://api.genshin.dev/characters/$nameId/constellation-3", title = vm.character.value?.constellations?.get(2)?.name.toString(), description = vm.character.value?.constellations?.get(2)?.description.toString()))
+    if((vm.character.value?.constellations?.size ?: 0) > 3) constellations.add(DetailListElement(iconUrl = "https://api.genshin.dev/characters/$nameId/constellation-4", title = vm.character.value?.constellations?.get(3)?.name.toString(), description = vm.character.value?.constellations?.get(3)?.description.toString()))
+    if((vm.character.value?.constellations?.size ?: 0) > 4) constellations.add(DetailListElement(iconUrl = "https://api.genshin.dev/characters/$nameId/constellation-5", title = vm.character.value?.constellations?.get(4)?.name.toString(), description = vm.character.value?.constellations?.get(4)?.description.toString()))
+    if((vm.character.value?.constellations?.size ?: 0) > 5) constellations.add(DetailListElement(iconUrl = "https://api.genshin.dev/characters/$nameId/constellation-6", title = vm.character.value?.constellations?.get(5)?.name.toString(), description = vm.character.value?.constellations?.get(5)?.description.toString()))
+
 
     Image(
         painter = painterResource(id = R.drawable.bg_details),
@@ -96,7 +92,7 @@ fun DetailPage(nameId:String, characterRoomViewModel: CharacterRoomViewModel) {
 
         if (page == 0) {
 
-            Box() {
+            Box {
 
                 Column(
                     modifier = Modifier
@@ -115,7 +111,7 @@ fun DetailPage(nameId:String, characterRoomViewModel: CharacterRoomViewModel) {
                                 Box(modifier = Modifier.size(10.dp)) {}
                                 AsyncImage(
                                     model = "https://api.genshin.dev/elements/${vm.character.value?.vision?.lowercase()}/icon",
-                                    contentDescription = "${vm.character.value?.vision.toString()}",
+                                    contentDescription = vm.character.value?.vision.toString(),
                                     modifier = Modifier
                                         .size(50.dp)
                                         .offset(x = (-3).dp, y = 0.dp)
@@ -123,7 +119,7 @@ fun DetailPage(nameId:String, characterRoomViewModel: CharacterRoomViewModel) {
                                 Box(modifier = Modifier.size(10.dp)) {}
                                 AsyncImage(
                                     model = "https://api.genshin.dev/nations/${vm.character.value?.nation?.lowercase()}/icon",
-                                    contentDescription = "${vm.character.value?.nation.toString()}",
+                                    contentDescription = vm.character.value?.nation.toString(),
                                     modifier = Modifier
                                         .size(65.dp)
                                         .offset(x = (-10).dp, y = 0.dp)

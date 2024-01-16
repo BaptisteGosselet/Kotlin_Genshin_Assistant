@@ -1,6 +1,5 @@
 package com.example.genshinassistant.views.components
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -62,11 +61,20 @@ fun CharacterCardGridView(nameId:String, name:String, vision:String, navControll
                     .background(color = Color(android.graphics.Color.parseColor(bgColor)).copy(alpha = 0.7f) )
             ) {
 
-                AsyncImage(
-                    model = "https://api.genshin.dev/characters/${nameId}/icon-big",
-                    contentDescription = "",
-                    modifier = Modifier.fillMaxSize()
-                )
+                if(name == "Traveler"){
+                    AsyncImage(
+                        model = "https://api.genshin.dev/characters/traveler-anemo/icon-big-aether",
+                        contentDescription = "",
+                        modifier = Modifier.fillMaxSize()
+                    )
+                }
+                else {
+                    AsyncImage(
+                        model = "https://api.genshin.dev/characters/${nameId}/icon-big",
+                        contentDescription = "",
+                        modifier = Modifier.fillMaxSize()
+                    )
+                }
 
                 AsyncImage(
                     model = "https://api.genshin.dev/elements/${vision.lowercase()}/icon",

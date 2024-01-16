@@ -1,20 +1,15 @@
 package com.example.genshinassistant.viewModels
 
 import android.util.Log
-import android.widget.Toast
 import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.genshinassistant.CharacterApplication
 import com.example.genshinassistant.models.Character
 import com.example.genshinassistant.repository.UseCase
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class DetailViewModel(nameId:String, characterRoomViewModel: CharacterRoomViewModel) : ViewModel() {
 

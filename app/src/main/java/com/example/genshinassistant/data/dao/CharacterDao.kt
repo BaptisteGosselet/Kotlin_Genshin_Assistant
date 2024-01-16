@@ -6,9 +6,9 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.example.genshinassistant.Utils.Companion.CHARACTER_TABLE
+import com.example.genshinassistant.data.model.Character
 import com.example.genshinassistant.data.repository.Characters
 import kotlinx.coroutines.flow.Flow
-import com.example.genshinassistant.data.model.Character
 
 @Dao
 interface CharacterDao {

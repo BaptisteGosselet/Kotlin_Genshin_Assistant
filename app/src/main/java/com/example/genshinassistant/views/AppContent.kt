@@ -17,6 +17,7 @@ import com.example.genshinassistant.navigation.RouteNames
 import com.example.genshinassistant.viewModels.CharacterListViewModel
 import com.example.genshinassistant.viewModels.CharacterRoomViewModel
 import com.example.genshinassistant.views.components.NavigationTopBar
+import com.example.genshinassistant.views.pages.DetailPage
 import com.example.genshinassistant.views.pages.FavoritesScreen
 import com.example.genshinassistant.views.pages.GridList
 

@@ -1,15 +1,14 @@
 package com.example.genshinassistant
 
-import com.example.genshinassistant.views.AppContent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.navigation.compose.rememberNavController
-import com.example.genshinassistant.data.repository.CharacterRepository
 import com.example.genshinassistant.ui.theme.GenshinAssistantTheme
 import com.example.genshinassistant.viewModels.CharacterListViewModel
 import com.example.genshinassistant.viewModels.CharacterRoomViewModel
+import com.example.genshinassistant.views.AppContent
 
 
 class MainActivity : ComponentActivity() {
