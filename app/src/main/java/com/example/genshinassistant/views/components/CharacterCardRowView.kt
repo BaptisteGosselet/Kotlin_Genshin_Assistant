@@ -56,11 +56,20 @@ fun CharacterCardRowView(nameId:String, name:String, vision:String, navControlle
                         .background(color = Color(android.graphics.Color.parseColor(bgColor)).copy(alpha = 0.7f))
                 ) {
 
-                    AsyncImage(
-                        model = "https://api.genshin.dev/characters/${nameId}/icon-big",
-                        contentDescription = "",
-                        modifier = Modifier.fillMaxSize()
-                    )
+                    if(name == "Traveler"){
+                        AsyncImage(
+                            model = "https://api.genshin.dev/characters/traveler-anemo/icon-big-lumine",
+                            contentDescription = "",
+                            modifier = Modifier.fillMaxSize()
+                        )
+                    }
+                    else {
+                        AsyncImage(
+                            model = "https://api.genshin.dev/characters/${nameId}/icon-big",
+                            contentDescription = "",
+                            modifier = Modifier.fillMaxSize()
+                        )
+                    }
 
                     AsyncImage(
                         model = "https://api.genshin.dev/elements/${vision.lowercase()}/icon",
