@@ -212,7 +212,7 @@ fun DetailPage(nameId:String, characterRoomViewModel: CharacterRoomViewModel) {
                                     }
 
                                     Box(modifier = Modifier.size(10.dp)) {}
-                                    Text(text = vm.character.value?.description.toString())
+                                    Text(text = vm.character.value?.description.toString(), color = Color(android.graphics.Color.parseColor("#6F6972")))
                                 }
 
                             }

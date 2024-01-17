@@ -7,6 +7,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -27,6 +28,20 @@ fun NavigationTopBar(navController: NavController) {
     NavigationBar() {
         val navBackStackEntry by navController.currentBackStackEntryAsState()
         val currentDestination = navBackStackEntry?.destination
+
+        LaunchedEffect(navBackStackEntry) {
+            when (currentDestination?.route) {
+                RouteNames.grid -> {
+                    selectedItem = 0
+                }
+                RouteNames.list -> {
+                    selectedItem = 1
+                }
+                RouteNames.favorites -> {
+                    selectedItem = 2
+                }
+            }
+        }
 
         NavigationBarItem(
             icon = {
