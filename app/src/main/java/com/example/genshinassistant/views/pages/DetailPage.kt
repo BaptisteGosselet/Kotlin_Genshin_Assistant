@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -18,6 +19,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.rememberScrollState
@@ -86,162 +88,174 @@ fun DetailPage(nameId:String, characterRoomViewModel: CharacterRoomViewModel) {
     val pagerState = rememberPagerState(pageCount = {
         4
     })
-    HorizontalPager(state = pagerState) { page ->
+    Column {
+        Spacer(modifier = Modifier.height(20.dp))
+        HorizontalPager(state = pagerState) { page ->
 
-        if (page == 0) {
+            if (page == 0) {
 
-            Box {
+                Box {
 
-                Column(
-                    modifier = Modifier
-                        .fillMaxSize()
-                ) {
+                    Column(
+                        modifier = Modifier
+                            .fillMaxSize()
+                    ) {
 
-                    Column {
-                        Column(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .height(425.dp),
-                            horizontalAlignment = Alignment.End
-                        ) {
+                        Column {
+                            Column(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .height(425.dp),
+                                horizontalAlignment = Alignment.End
+                            ) {
 
-                            Column {
-                                Box(modifier = Modifier.size(10.dp)) {}
-                                AsyncImage(
-                                    model = "https://api.genshin.dev/elements/${vm.character.value?.vision?.lowercase()}/icon",
-                                    contentDescription = vm.character.value?.vision.toString(),
-                                    modifier = Modifier
-                                        .size(50.dp)
-                                        .offset(x = (-3).dp, y = 0.dp)
-                                )
-                                Box(modifier = Modifier.size(10.dp)) {}
-                                AsyncImage(
-                                    model = "https://api.genshin.dev/nations/${vm.character.value?.nation?.lowercase()}/icon",
-                                    contentDescription = vm.character.value?.nation.toString(),
-                                    modifier = Modifier
-                                        .size(65.dp)
-                                        .offset(x = (-10).dp, y = 0.dp)
-                                )
+                                Column {
+                                    Box(modifier = Modifier.size(10.dp)) {}
+                                    AsyncImage(
+                                        model = "https://api.genshin.dev/elements/${vm.character.value?.vision?.lowercase()}/icon",
+                                        contentDescription = vm.character.value?.vision.toString(),
+                                        modifier = Modifier
+                                            .size(50.dp)
+                                            .offset(x = (-3).dp, y = 0.dp)
+                                    )
+                                    Box(modifier = Modifier.size(10.dp)) {}
+                                    AsyncImage(
+                                        model = "https://api.genshin.dev/nations/${vm.character.value?.nation?.lowercase()}/icon",
+                                        contentDescription = vm.character.value?.nation.toString(),
+                                        modifier = Modifier
+                                            .size(65.dp)
+                                            .offset(x = (-10).dp, y = 0.dp)
+                                    )
 
-                                Column(
-                                    modifier = Modifier.fillMaxHeight(),
-                                    verticalArrangement = Arrangement.Bottom
-                                ) {
-                                    val scope = rememberCoroutineScope()
-                                    if(vm.isFavorite.value){
-                                        Icon(
-                                            painter = painterResource(id = R.drawable.bookmark_added),
-                                            contentDescription = "Favorites",
-                                            tint = Color(android.graphics.Color.parseColor("#1AA7CE")),
-                                            modifier = Modifier
-                                                .size(45.dp)
-                                                .offset(x = 5.dp, y = (-5).dp)
-                                                .clickable {
-                                                    scope.launch {
-                                                        vm.deleteFromFavorite()
-                                                        favoriteMessage(nameId, !vm.isFavorite.value, context)
+                                    Column(
+                                        modifier = Modifier.fillMaxHeight(),
+                                        verticalArrangement = Arrangement.Bottom
+                                    ) {
+                                        val scope = rememberCoroutineScope()
+                                        if(vm.isFavorite.value){
+                                            Icon(
+                                                painter = painterResource(id = R.drawable.bookmark_added),
+                                                contentDescription = "Favorites",
+                                                tint = Color(android.graphics.Color.parseColor("#1AA7CE")),
+                                                modifier = Modifier
+                                                    .size(45.dp)
+                                                    .offset(x = 5.dp, y = (-5).dp)
+                                                    .clickable {
+                                                        scope.launch {
+                                                            vm.deleteFromFavorite()
+                                                            favoriteMessage(
+                                                                nameId,
+                                                                !vm.isFavorite.value,
+                                                                context
+                                                            )
 
+                                                        }
                                                     }
-                                                }
-                                        )
-                                    }
-                                    else{
-                                        Icon(
-                                            painter = painterResource(id = R.drawable.bookmark_add),
-                                            contentDescription = "Favorites",
-                                            tint = Color(android.graphics.Color.parseColor("#FFFFFF")),
-                                            modifier = Modifier
-                                                .size(45.dp)
-                                                .offset(x = 5.dp, y = (-5).dp)
-                                                .clickable {
-                                                    scope.launch {
-                                                        vm.addToFavorite(nameId)
-                                                        favoriteMessage(nameId, !vm.isFavorite.value, context)
+                                            )
+                                        }
+                                        else{
+                                            Icon(
+                                                painter = painterResource(id = R.drawable.bookmark_add),
+                                                contentDescription = "Favorites",
+                                                tint = Color(android.graphics.Color.parseColor("#FFFFFF")),
+                                                modifier = Modifier
+                                                    .size(45.dp)
+                                                    .offset(x = 5.dp, y = (-5).dp)
+                                                    .clickable {
+                                                        scope.launch {
+                                                            vm.addToFavorite(nameId)
+                                                            favoriteMessage(
+                                                                nameId,
+                                                                !vm.isFavorite.value,
+                                                                context
+                                                            )
 
+                                                        }
                                                     }
-                                                }
-                                        )
+                                            )
+                                        }
                                     }
                                 }
                             }
-                        }
-
-                        Column(
-                            modifier = Modifier
-                                .fillMaxSize()
-                                .background(Color.Transparent)
-                                .clip(RoundedCornerShape(50.dp, 50.dp, 0.dp, 0.dp))
-                        ) {
 
                             Column(
                                 modifier = Modifier
                                     .fillMaxSize()
-                                    .background(Color(android.graphics.Color.parseColor("#FEFFF1")))
-                                    .verticalScroll(rememberScrollState())
-                                    .weight(weight = 1f, fill = false)
+                                    .background(Color.Transparent)
+                                    .clip(RoundedCornerShape(50.dp, 50.dp, 0.dp, 0.dp))
                             ) {
 
                                 Column(
-                                    modifier = Modifier.padding(25.dp, 35.dp, 20.dp, 20.dp)
+                                    modifier = Modifier
+                                        .fillMaxSize()
+                                        .background(Color(android.graphics.Color.parseColor("#FEFFF1")))
+                                        .verticalScroll(rememberScrollState())
+                                        .weight(weight = 1f, fill = false)
                                 ) {
-                                    Text(
-                                        text = vm.character.value?.name.toString(),
-                                        fontSize = 36.sp,
-                                        fontWeight = FontWeight.Bold,
-                                        color = Color(android.graphics.Color.parseColor("#6F6972")),
-                                    )
 
-                                    Text(
-                                        text = vm.character.value?.title.toString(),
-                                        fontSize = 16.sp,
-                                        fontWeight = FontWeight.Bold,
-                                        color = Color(android.graphics.Color.parseColor("#6F6972")).copy(
-                                            alpha = 0.75f
-                                        ),
-                                    )
+                                    Column(
+                                        modifier = Modifier.padding(25.dp, 35.dp, 20.dp, 20.dp)
+                                    ) {
+                                        Text(
+                                            text = vm.character.value?.name.toString(),
+                                            fontSize = 36.sp,
+                                            fontWeight = FontWeight.Bold,
+                                            color = Color(android.graphics.Color.parseColor("#6F6972")),
+                                        )
 
-                                    Row {
-                                        for (i in 1..(vm.character.value?.rarity ?: 0)) {
-                                            Image(
-                                                painter = painterResource(id = R.drawable.baseline_star_24),
-                                                modifier = Modifier.size(24.dp),
-                                                contentDescription = "Star",
-                                                contentScale = ContentScale.Crop,
-                                            )
+                                        Text(
+                                            text = vm.character.value?.title.toString(),
+                                            fontSize = 16.sp,
+                                            fontWeight = FontWeight.Bold,
+                                            color = Color(android.graphics.Color.parseColor("#6F6972")).copy(
+                                                alpha = 0.75f
+                                            ),
+                                        )
+
+                                        Row {
+                                            for (i in 1..(vm.character.value?.rarity ?: 0)) {
+                                                Image(
+                                                    painter = painterResource(id = R.drawable.baseline_star_24),
+                                                    modifier = Modifier.size(24.dp),
+                                                    contentDescription = "Star",
+                                                    contentScale = ContentScale.Crop,
+                                                )
+                                            }
                                         }
+
+                                        Box(modifier = Modifier.size(10.dp)) {}
+                                        Text(text = vm.character.value?.description.toString(), color = Color(android.graphics.Color.parseColor("#6F6972")))
                                     }
 
-                                    Box(modifier = Modifier.size(10.dp)) {}
-                                    Text(text = vm.character.value?.description.toString(), color = Color(android.graphics.Color.parseColor("#6F6972")))
                                 }
 
                             }
-
                         }
                     }
+
+                    AsyncImage(
+                        model = "https://api.genshin.dev/characters/$nameId/portrait",
+                        contentDescription = "",
+                        modifier = Modifier
+                            .height(485.dp)
+                            .offset(x = 0.dp, y = 10.dp)
+                    )
                 }
-
-                AsyncImage(
-                    model = "https://api.genshin.dev/characters/$nameId/portrait",
-                    contentDescription = "",
-                    modifier = Modifier
-                        .height(485.dp)
-                        .offset(x = 0.dp, y = 10.dp)
-                )
             }
-        }
-        if(page == 1){
-            DetailList("Skill Talents", skillTalents)
-        }
-        if(page == 2){
-            DetailList(pageTitle = "Passive Talents", elements = passiveTalents)
-        }
-        if(page == 3){
-            DetailList("Constellations", constellations)
-        }
+            if(page == 1){
+                DetailList("Skill Talents", skillTalents)
+            }
+            if(page == 2){
+                DetailList(pageTitle = "Passive Talents", elements = passiveTalents)
+            }
+            if(page == 3){
+                DetailList("Constellations", constellations)
+            }
 
+        }
     }
-}
+    }
+
 
 fun favoriteMessage(nameId: String, state:Boolean, context : Context) {
     if (state)
