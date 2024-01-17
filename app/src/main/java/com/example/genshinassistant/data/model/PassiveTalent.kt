@@ -12,5 +12,5 @@ data class PassiveTalent(
     var level: Int,
     var name: String,
     var unlock: String,
-    var character_id: Int
+    var nameId: String
 )

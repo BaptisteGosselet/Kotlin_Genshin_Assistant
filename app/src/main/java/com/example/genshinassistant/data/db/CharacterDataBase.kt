@@ -68,19 +68,19 @@ abstract class CharacterDataBase : RoomDatabase() {
                     val constellationDao = database.constellationDao()
                     constellationDao.deleteAllConstellations()
                     val initialConstellation = listOf(
-                        Constellation(0, "", 0, "", "", 0)
+                        Constellation(0, "", 0, "", "", "")
                     )
                     constellationDao.addConstellation(initialConstellation[0])
                     val passiveTalentDao = database.passiveTalentDao()
                     passiveTalentDao.deleteAllPassiveTalents()
                     val initialPassiveTalents = listOf(
-                        PassiveTalent(0, "", 0, "", "", 0)
+                        PassiveTalent(0, "", 0, "", "", "")
                     )
                     passiveTalentDao.addPassiveTalent(initialPassiveTalents[0])
                     val skillTalentDao = database.skillTalentDao()
                     skillTalentDao.deleteAllSkillTalents()
                     val initialSkillTalents = listOf(
-                        SkillTalent(0, "", "", "", "", 0)
+                        SkillTalent(0, "", "", "", "", "")
                     )
                     skillTalentDao.addSkillTalent(initialSkillTalents[0])
                     val upgradeDao = database.upgradeDao()

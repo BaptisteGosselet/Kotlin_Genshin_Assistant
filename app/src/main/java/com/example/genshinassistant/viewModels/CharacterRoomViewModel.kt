@@ -24,28 +24,20 @@ class CharacterRoomViewModel(private val repository: CharacterRepository) : View
     var character by mutableStateOf(Character(0, "", "", "", "", "", "", "", 0, "", "", "", "", ""))
 
     // une constellations pour utiliser add et delete
-    var constellation by mutableStateOf(Constellation(0, "", 0, "", "", 0))
+    var constellation by mutableStateOf(Constellation(0, "", 0, "", "", ""))
 
     // un passiveTalent pour utiliser add et delete
-    var passiveTalent by mutableStateOf(PassiveTalent(0, "", 0, "", "", 0))
+    var passiveTalent by mutableStateOf(PassiveTalent(0, "", 0, "", "", ""))
 
     // un skillTalent pour utiliser add et delete
-    var skillTalent by mutableStateOf(SkillTalent(0, "", "", "", "", 0))
+    var skillTalent by mutableStateOf(SkillTalent(0, "", "", "", "", ""))
 
     // un upgrade pour utiliser add et delete
     var upgrade by mutableStateOf(Upgrade(0, "", "", 0))
 
-    fun getCharacterByName(name: String): Character {
-        viewModelScope.launch {
-            try{
-                character = repository.getCharacterByNameFromRoom(name)
-            }
-            catch (e: Exception){
-                println(e.message.toString())
-            }
-
-        }
-        return character
+    fun getCharacterByNameId(nameId: String): Character {
+        character = repository.getCharacterByNameFromRoom(nameId)
+        return repository.getCharacterByNameFromRoom(nameId)
     }
 
     suspend fun addCharacter(character: Character) : Long {
@@ -72,16 +64,20 @@ class CharacterRoomViewModel(private val repository: CharacterRepository) : View
         repository.deleteCharacterFromRoom(character)
     }
 
-    suspend fun deleteConstellationByCharacterId(characterId: Int) {
-        repository.deleteConstellationByCharacterIdFromRoom(characterId)
+    suspend fun deleteCharacterByNameId(nameId: String) {
+        repository.deleteCharacterByNameIdFromRoom(nameId)
     }
 
-    suspend fun deletePassiveTalentByCharacterId(characterId: Int) {
-        repository.deletePassiveTalentByCharacterIdFromRoom(characterId)
+    suspend fun deleteConstellationByCharacterId(nameId: String) {
+        repository.deleteConstellationByNameIdFromRoom(nameId)
     }
 
-    suspend fun deleteSkillTalentByCharacterId(characterId: Int) {
-        repository.deleteSkillTalentByCharacterIdFromRoom(characterId)
+    suspend fun deletePassiveTalentByCharacterId(nameId: String) {
+        repository.deletePassiveTalentByNameIdFromRoom(nameId)
+    }
+
+    suspend fun deleteSkillTalentByCharacterId(nameId: String) {
+        repository.deleteSkillTalentByNameIdFromRoom(nameId)
     }
 
     suspend fun deleteUpgradeBySkillTalentId(skillTalentId: Int) {

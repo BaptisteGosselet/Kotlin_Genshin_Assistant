@@ -57,8 +57,6 @@ fun DetailPage(nameId:String, characterRoomViewModel: CharacterRoomViewModel) {
     val vm: DetailViewModel = remember { DetailViewModel(nameId, characterRoomViewModel) }
     val context = LocalContext.current
 
-    var state by remember { mutableStateOf(vm.isFavorite.value) }
-
     val skillTalents = mutableListOf<DetailListElement>()
     if((vm.character.value?.skillTalents?.size ?: 0) > 0) skillTalents.add(DetailListElement(iconUrl = "https://api.genshin.dev/characters/$nameId/talent-na",title = vm.character.value?.skillTalents?.get(0)?.name.toString(), description = vm.character.value?.skillTalents?.get(0)?.description.toString()))
     if((vm.character.value?.skillTalents?.size ?: 0) > 1) skillTalents.add(DetailListElement(iconUrl = "https://api.genshin.dev/characters/$nameId/talent-skill",title = vm.character.value?.skillTalents?.get(1)?.name.toString(), description = vm.character.value?.skillTalents?.get(1)?.description.toString()))
@@ -130,24 +128,40 @@ fun DetailPage(nameId:String, characterRoomViewModel: CharacterRoomViewModel) {
                                     verticalArrangement = Arrangement.Bottom
                                 ) {
                                     val scope = rememberCoroutineScope()
-                                    Icon(
-                                        painter = painterResource(id = if (state) R.drawable.bookmark_added else R.drawable.bookmark_add),
-                                        contentDescription = "Favorites",
-                                        tint = (if (state) Color(android.graphics.Color.parseColor("#1AA7CE")) else Color(android.graphics.Color.parseColor("#FFFFFF"))),
-                                        modifier = Modifier
-                                            .size(45.dp)
-                                            .offset(x = 5.dp, y = (-5).dp)
-                                            .clickable {
-                                                scope.launch {
-                                                    if (state)
+                                    if(vm.isFavorite.value){
+                                        Icon(
+                                            painter = painterResource(id = R.drawable.bookmark_added),
+                                            contentDescription = "Favorites",
+                                            tint = Color(android.graphics.Color.parseColor("#1AA7CE")),
+                                            modifier = Modifier
+                                                .size(45.dp)
+                                                .offset(x = 5.dp, y = (-5).dp)
+                                                .clickable {
+                                                    scope.launch {
                                                         vm.deleteFromFavorite(nameId)
-                                                    else
-                                                        vm.addToFavorite(nameId)
-                                                    favoriteMessage(nameId, state, context)
-                                                    state = !state
+                                                        favoriteMessage(nameId, !vm.isFavorite.value, context)
+
+                                                    }
                                                 }
-                                            }
-                                    )
+                                        )
+                                    }
+                                    else{
+                                        Icon(
+                                            painter = painterResource(id = R.drawable.bookmark_add),
+                                            contentDescription = "Favorites",
+                                            tint = Color(android.graphics.Color.parseColor("#FFFFFF")),
+                                            modifier = Modifier
+                                                .size(45.dp)
+                                                .offset(x = 5.dp, y = (-5).dp)
+                                                .clickable {
+                                                    scope.launch {
+                                                        vm.addToFavorite(nameId)
+                                                        favoriteMessage(nameId, !vm.isFavorite.value, context)
+
+                                                    }
+                                                }
+                                        )
+                                    }
                                 }
                             }
                         }
