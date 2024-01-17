@@ -6,12 +6,14 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.navArgument
 import com.example.genshinassistant.navigation.RouteNames
 import com.example.genshinassistant.viewModels.CharacterListViewModel
@@ -24,9 +26,13 @@ import com.example.genshinassistant.views.pages.GridList
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AppContent(navController: NavHostController, characterListViewModel: CharacterListViewModel, characterRoomViewModel: CharacterRoomViewModel) {
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val shouldShowNavBar = navBackStackEntry?.destination?.route?.startsWith(RouteNames.details) != true
+
+
     Scaffold(
         topBar = {
-            NavigationTopBar(navController = navController)
+            NavigationTopBar(navController = navController, showBar = shouldShowNavBar)
         }
     ) { innerPadding ->
         Column(
