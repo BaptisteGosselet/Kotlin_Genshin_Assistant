@@ -1,6 +1,5 @@
 package com.example.genshinassistant.viewModels
 
-import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -36,7 +35,6 @@ class DetailViewModel(nameId:String, characterRoomViewModel: CharacterRoomViewMo
             try {
                 _character.value = useCase.getCharacterByName(nameId);
                 _isFavorite.value = characterAlreadyInFavorite(nameId)
-                Log.d("bapt", "loadCharacter($nameId) + ${isFavorite.value}}")
             } catch (e: Exception) {
                 errorMessage = e.message.toString()
             }
@@ -45,7 +43,6 @@ class DetailViewModel(nameId:String, characterRoomViewModel: CharacterRoomViewMo
 
     suspend fun addToFavorite(nameId: String):Boolean{
         if (characterAlreadyInFavorite(nameId)) {
-            Log.d("bapt", "characterAlreadyInFavorite($nameId) + ${isFavorite.value}}")
             return false
         }
 
@@ -86,48 +83,33 @@ class DetailViewModel(nameId:String, characterRoomViewModel: CharacterRoomViewMo
         }
 
         val skillTalents = character.value?.skillTalents
-        var upgrades = skillTalents?.get(0)?.upgrades
         for (skillTalent in skillTalents!!) {
             characterRoomViewModel.skillTalent.description = skillTalent.description.toString()
             characterRoomViewModel.skillTalent.name = skillTalent.name.toString()
             characterRoomViewModel.skillTalent.type = skillTalent.type.toString()
             characterRoomViewModel.skillTalent.unlock = skillTalent.unlock.toString()
             characterRoomViewModel.skillTalent.nameId = nameId
-            val skillTalentId = characterRoomViewModel.addSkillTalent(characterRoomViewModel.skillTalent)
-
-            /*upgrades = skillTalent.upgrades
-            Log.d("bapt", "upgrades($skillTalent)")
-            for (upgrade in upgrades!!) {
-                characterRoomViewModel.upgrade.name = upgrade.name.toString()
-                characterRoomViewModel.upgrade.value = upgrade.value.toString()
-                characterRoomViewModel.upgrade.skillTalent_id = skillTalentId.toInt()
-                characterRoomViewModel.addUpgrade(characterRoomViewModel.upgrade)
-            }*/
         }
 
         return withContext(Dispatchers.IO) {
             try {
                 characterRoomViewModel.addCharacter(c)
-                Log.d("bapt", "addToFavorite($c)")
                 _isFavorite.value = true
                 true
             } catch (e: Exception) {
-                Log.d("bapt", "addToFavorite($c) failed")
                 false
             }
         }
     }
 
     //  Delete a character from the database
-    suspend fun deleteFromFavorite(nameId: String) {
-        Log.d("bapt", "delete ${characterRoomViewModel.character}")
+    suspend fun deleteFromFavorite() {
 
         withContext(Dispatchers.IO) {
             characterRoomViewModel.deleteSkillTalentByCharacterId(characterRoomViewModel.character.nameId)
             characterRoomViewModel.deletePassiveTalentByCharacterId(characterRoomViewModel.character.nameId)
             characterRoomViewModel.deleteConstellationByCharacterId(characterRoomViewModel.character.nameId)
             characterRoomViewModel.deleteCharacterByNameId(characterRoomViewModel.character.nameId)
-            Log.d("bapt", "confirm delete ${characterRoomViewModel.character}")
             _isFavorite.value = false
         }
 

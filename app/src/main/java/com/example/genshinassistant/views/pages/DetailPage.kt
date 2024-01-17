@@ -138,7 +138,7 @@ fun DetailPage(nameId:String, characterRoomViewModel: CharacterRoomViewModel) {
                                                 .offset(x = 5.dp, y = (-5).dp)
                                                 .clickable {
                                                     scope.launch {
-                                                        vm.deleteFromFavorite(nameId)
+                                                        vm.deleteFromFavorite()
                                                         favoriteMessage(nameId, !vm.isFavorite.value, context)
 
                                                     }
