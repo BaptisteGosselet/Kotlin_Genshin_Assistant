@@ -12,5 +12,5 @@ data class SkillTalent(
     var name: String,
     var type: String,
     var unlock: String,
-    var character_id: Int
+    var nameId: String
 )

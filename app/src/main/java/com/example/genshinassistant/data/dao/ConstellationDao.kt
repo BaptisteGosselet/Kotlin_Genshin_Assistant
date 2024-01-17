@@ -9,8 +9,8 @@ import com.example.genshinassistant.data.model.Constellation
 @Dao
 interface ConstellationDao {
 
-    @Query("SELECT * FROM $CONSTELLATION_TABLE WHERE character_id = :characterId")
-    fun getConstellationsByCharacterId(characterId: Int): List<Constellation>
+    @Query("SELECT * FROM $CONSTELLATION_TABLE WHERE nameId = :nameId")
+    fun getConstellationsByNameId(nameId: String): List<Constellation>
 
     @Insert
     suspend fun addConstellation(constellation: Constellation) : Long
@@ -19,8 +19,8 @@ interface ConstellationDao {
     suspend fun addAllConstellations(constellations: List<Constellation>)
 
     // Delete constellation of a character
-    @Query("DELETE FROM $CONSTELLATION_TABLE WHERE character_id = :characterId")
-    suspend fun deleteConstellationByCharacterId(characterId: Int)
+    @Query("DELETE FROM $CONSTELLATION_TABLE WHERE nameId = :nameId")
+    suspend fun deleteConstellationByNameId(nameId: String)
 
     @Query("DELETE FROM $CONSTELLATION_TABLE")
     suspend fun deleteAllConstellations()

@@ -25,8 +25,8 @@ class CharacterRepository(private val characterDao: CharacterDao,
         return characterDao.getCharacters()
     }
 
-    fun getCharacterByNameFromRoom(name: String): Character {
-        return characterDao.getCharacterByName(name)
+    fun getCharacterByNameFromRoom(nameId: String): Character {
+        return characterDao.getCharacterByName(nameId)
     }
 
     suspend fun addCharacterToRoom(character: Character) : Long {
@@ -37,6 +37,10 @@ class CharacterRepository(private val characterDao: CharacterDao,
         characterDao.deleteCharacter(character)
     }
 
+    suspend fun deleteCharacterByNameIdFromRoom(nameId: String) {
+        characterDao.deleteCharacterByNameId(nameId)
+    }
+
     suspend fun addConstellationToRoom(constellation: Constellation) : Long {
         return constellationDao.addConstellation(constellation)
     }
@@ -45,8 +49,8 @@ class CharacterRepository(private val characterDao: CharacterDao,
         constellationDao.addAllConstellations(constellations)
     }
 
-    suspend fun deleteConstellationByCharacterIdFromRoom(characterId: Int) {
-        constellationDao.deleteConstellationByCharacterId(characterId)
+    suspend fun deleteConstellationByNameIdFromRoom(nameId: String) {
+        constellationDao.deleteConstellationByNameId(nameId)
     }
 
     suspend fun addPassiveTalentToRoom(passiveTalent: PassiveTalent) : Long {
@@ -57,8 +61,8 @@ class CharacterRepository(private val characterDao: CharacterDao,
         PassiveTalentDao.addAllPassiveTalents(passiveTalents)
     }
 
-    suspend fun deletePassiveTalentByCharacterIdFromRoom(characterId: Int) {
-        PassiveTalentDao.deletePassiveTalentByCharacterId(characterId)
+    suspend fun deletePassiveTalentByNameIdFromRoom(nameId: String) {
+        PassiveTalentDao.deletePassiveTalentByNameId(nameId)
     }
 
     suspend fun addSkillTalentToRoom(skillTalent: SkillTalent) : Long {
@@ -69,8 +73,8 @@ class CharacterRepository(private val characterDao: CharacterDao,
         skillTalentDao.addAllSkillTalents(skillTalents)
     }
 
-    suspend fun deleteSkillTalentByCharacterIdFromRoom(characterId: Int) {
-        skillTalentDao.deleteSkillTalentByCharacterId(characterId)
+    suspend fun deleteSkillTalentByNameIdFromRoom(nameId: String) {
+        skillTalentDao.deleteSkillTalentByNameId(nameId)
     }
 
     suspend fun addUpgradeToRoom(upgrade: Upgrade) : Long {

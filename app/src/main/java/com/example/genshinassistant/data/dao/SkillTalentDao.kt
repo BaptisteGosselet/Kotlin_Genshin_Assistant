@@ -9,8 +9,8 @@ import com.example.genshinassistant.data.model.SkillTalent
 @Dao
 interface SkillTalentDao {
 
-    @Query("SELECT * FROM $SKILL_TALENT_TABLE WHERE character_id = :characterId")
-    fun getSkillTalentsByCharacterId(characterId: Int): List<SkillTalent>
+    @Query("SELECT * FROM $SKILL_TALENT_TABLE WHERE nameId = :nameId")
+    fun getSkillTalentsByNameId(nameId: String): List<SkillTalent>
 
     @Insert
     suspend fun addSkillTalent(skillTalent: SkillTalent) : Long
@@ -19,8 +19,8 @@ interface SkillTalentDao {
     suspend fun addAllSkillTalents(skillTalents: List<SkillTalent>)
 
     // Delete skill talent of a character
-    @Query("DELETE FROM $SKILL_TALENT_TABLE WHERE character_id = :characterId")
-    suspend fun deleteSkillTalentByCharacterId(characterId: Int)
+    @Query("DELETE FROM $SKILL_TALENT_TABLE WHERE nameId = :nameId")
+    suspend fun deleteSkillTalentByNameId(nameId: String)
 
     @Query("DELETE FROM $SKILL_TALENT_TABLE")
     suspend fun deleteAllSkillTalents()

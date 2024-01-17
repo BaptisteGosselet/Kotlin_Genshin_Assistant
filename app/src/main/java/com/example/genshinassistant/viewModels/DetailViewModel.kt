@@ -24,6 +24,7 @@ class DetailViewModel(nameId:String, characterRoomViewModel: CharacterRoomViewMo
     private var _isFavorite = mutableStateOf<Boolean>(false);
     val isFavorite: State<Boolean> = _isFavorite;
 
+
     init {
         loadCharacter(nameId);
     }
@@ -31,8 +32,9 @@ class DetailViewModel(nameId:String, characterRoomViewModel: CharacterRoomViewMo
     private fun loadCharacter(nameId: String) {
         viewModelScope.launch {
             try {
-                _isFavorite.value = characterAlreadyInFavorite(nameId);
                 _character.value = useCase.getCharacterByName(nameId);
+                _isFavorite.value = characterAlreadyInFavorite(nameId)
+                Log.d("bapt", "loadCharacter($nameId) + ${isFavorite.value}}")
             } catch (e: Exception) {
                 errorMessage = e.message.toString()
             }
@@ -60,7 +62,6 @@ class DetailViewModel(nameId:String, characterRoomViewModel: CharacterRoomViewMo
         characterRoomViewModel.character.weapon_type = character.value?.weapon_type.toString()
 
         val c = characterRoomViewModel.character
-        val characterId : Long = characterRoomViewModel.addCharacter(c)
 
         val constellations = character.value?.constellations
         for (constellation in constellations!!) {
@@ -68,7 +69,7 @@ class DetailViewModel(nameId:String, characterRoomViewModel: CharacterRoomViewMo
             characterRoomViewModel.constellation.level = constellation.level?.toInt()!!
             characterRoomViewModel.constellation.name = constellation.name.toString()
             characterRoomViewModel.constellation.unlock = constellation.unlock.toString()
-            characterRoomViewModel.constellation.character_id = characterId.toInt()
+            characterRoomViewModel.constellation.nameId = nameId
             characterRoomViewModel.addConstellation(characterRoomViewModel.constellation)
         }
 
@@ -78,7 +79,7 @@ class DetailViewModel(nameId:String, characterRoomViewModel: CharacterRoomViewMo
             characterRoomViewModel.passiveTalent.level = passiveTalent.level?.toInt() ?: 0
             characterRoomViewModel.passiveTalent.name = passiveTalent.name.toString()
             characterRoomViewModel.passiveTalent.unlock = passiveTalent.unlock.toString()
-            characterRoomViewModel.passiveTalent.character_id = characterId.toInt()
+            characterRoomViewModel.passiveTalent.nameId = nameId
             characterRoomViewModel.addPassiveTalent(characterRoomViewModel.passiveTalent)
         }
 
@@ -89,7 +90,7 @@ class DetailViewModel(nameId:String, characterRoomViewModel: CharacterRoomViewMo
             characterRoomViewModel.skillTalent.name = skillTalent.name.toString()
             characterRoomViewModel.skillTalent.type = skillTalent.type.toString()
             characterRoomViewModel.skillTalent.unlock = skillTalent.unlock.toString()
-            characterRoomViewModel.skillTalent.character_id = characterId.toInt()
+            characterRoomViewModel.skillTalent.nameId = nameId
             val skillTalentId = characterRoomViewModel.addSkillTalent(characterRoomViewModel.skillTalent)
 
             /*upgrades = skillTalent.upgrades
@@ -102,34 +103,44 @@ class DetailViewModel(nameId:String, characterRoomViewModel: CharacterRoomViewMo
             }*/
         }
 
-        Log.d("bapt", "addToFavorite($c) + $characterId")
-        _isFavorite.value = true
-        return true
+        return withContext(Dispatchers.IO) {
+            try {
+                characterRoomViewModel.addCharacter(c)
+                Log.d("bapt", "addToFavorite($c)")
+                _isFavorite.value = true
+                true
+            } catch (e: Exception) {
+                Log.d("bapt", "addToFavorite($c) failed")
+                false
+            }
+        }
     }
 
     //  Delete a character from the database
     suspend fun deleteFromFavorite(nameId: String) {
-        Log.d("bapt", "${characterRoomViewModel.character}")
-        characterRoomViewModel.deleteSkillTalentByCharacterId(characterRoomViewModel.character.id)
-        characterRoomViewModel.deletePassiveTalentByCharacterId(characterRoomViewModel.character.id)
-        characterRoomViewModel.deleteConstellationByCharacterId(characterRoomViewModel.character.id)
-        characterRoomViewModel.deleteCharacter(characterRoomViewModel.character)
+        Log.d("bapt", "delete ${characterRoomViewModel.character}")
+
+        withContext(Dispatchers.IO) {
+            characterRoomViewModel.deleteSkillTalentByCharacterId(characterRoomViewModel.character.nameId)
+            characterRoomViewModel.deletePassiveTalentByCharacterId(characterRoomViewModel.character.nameId)
+            characterRoomViewModel.deleteConstellationByCharacterId(characterRoomViewModel.character.nameId)
+            characterRoomViewModel.deleteCharacterByNameId(characterRoomViewModel.character.nameId)
+            Log.d("bapt", "confirm delete ${characterRoomViewModel.character}")
+            _isFavorite.value = false
+        }
 
         _isFavorite.value = false
     }
 
-    private fun characterAlreadyInFavorite(nameId: String): Boolean {
-        var res = false
-        viewModelScope.launch {
+    private suspend fun characterAlreadyInFavorite(nameId: String): Boolean {
+        return withContext(Dispatchers.IO) {
             try {
-                val character = characterRoomViewModel.getCharacterByName(nameId)
-                res = character.nameId == nameId
-                _isFavorite.value = res
+                val character = characterRoomViewModel.getCharacterByNameId(nameId)
+                character != null
             } catch (e: Exception) {
-                errorMessage = e.message.toString()
+                false
             }
         }
-        return res
     }
 
 }

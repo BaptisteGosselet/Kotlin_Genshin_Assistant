@@ -24,6 +24,9 @@ interface CharacterDao {
     @Delete
     suspend fun deleteCharacter(character: Character)
 
+    @Query("DELETE FROM $CHARACTER_TABLE WHERE nameId = :nameId")
+    suspend fun deleteCharacterByNameId(nameId: String)
+
     @Query("DELETE FROM $CHARACTER_TABLE")
     suspend fun deleteAllCharacters()
 }
