@@ -37,8 +37,6 @@ abstract class CharacterDataBase : RoomDatabase() {
         private var instance: CharacterDataBase? = null
 
         fun getDatabase(context: Context): CharacterDataBase {
-            // Vider la BDD à chaque fois pour test
-            if (context.deleteDatabase(CHARACTER_DATABASE)) Log.d("BDD", "RESET de la BDD OK") else Log.d("BDD", "RESET de la BDD PAS OK !!")
 
             return instance ?: synchronized(this) {
                 instance ?: Room.databaseBuilder(
@@ -46,7 +44,6 @@ abstract class CharacterDataBase : RoomDatabase() {
                     CharacterDataBase::class.java,
                     CHARACTER_DATABASE
                 )
-                    .fallbackToDestructiveMigration()
                     .addCallback(CharacterDataBaseCallback())
                     .build()
             }
