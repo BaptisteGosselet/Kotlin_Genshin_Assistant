@@ -62,22 +62,22 @@ fun DetailPage(nameId:String, characterRoomViewModel: CharacterRoomViewModel) {
     val context = LocalContext.current
 
     val skillTalents = mutableListOf<DetailListElement>()
-    if((vm.character.value?.skillTalents?.size ?: 0) > 0) skillTalents.add(DetailListElement(iconUrl = "https://api.genshin.dev/characters/$nameId/talent-na",title = vm.character.value?.skillTalents?.get(0)?.name.toString(), description = vm.character.value?.skillTalents?.get(0)?.description.toString()))
-    if((vm.character.value?.skillTalents?.size ?: 0) > 1) skillTalents.add(DetailListElement(iconUrl = "https://api.genshin.dev/characters/$nameId/talent-skill",title = vm.character.value?.skillTalents?.get(1)?.name.toString(), description = vm.character.value?.skillTalents?.get(1)?.description.toString()))
-    if((vm.character.value?.skillTalents?.size ?: 0) > 2) skillTalents.add(DetailListElement(iconUrl = "https://api.genshin.dev/characters/$nameId/talent-burst",title = vm.character.value?.skillTalents?.get(2)?.name.toString(), description = vm.character.value?.skillTalents?.get(2)?.description.toString()))
+    if((vm.character.value?.skillTalents?.size ?: 0) > 0) skillTalents.add(DetailListElement(iconUrl = "$BASE_URL/characters/$nameId/talent-na",title = vm.character.value?.skillTalents?.get(0)?.name.toString(), description = vm.character.value?.skillTalents?.get(0)?.description.toString()))
+    if((vm.character.value?.skillTalents?.size ?: 0) > 1) skillTalents.add(DetailListElement(iconUrl = "$BASE_URL/characters/$nameId/talent-skill",title = vm.character.value?.skillTalents?.get(1)?.name.toString(), description = vm.character.value?.skillTalents?.get(1)?.description.toString()))
+    if((vm.character.value?.skillTalents?.size ?: 0) > 2) skillTalents.add(DetailListElement(iconUrl = "$BASE_URL/characters/$nameId/talent-burst",title = vm.character.value?.skillTalents?.get(2)?.name.toString(), description = vm.character.value?.skillTalents?.get(2)?.description.toString()))
 
     val passiveTalents = mutableListOf<DetailListElement>()
-    if((vm.character.value?.passiveTalents?.size ?: 0) > 0) passiveTalents.add(DetailListElement(iconUrl = "https://api.genshin.dev/characters/$nameId/talent-passive-0", title = vm.character.value?.passiveTalents?.get(0)?.name.toString(), description = vm.character.value?.passiveTalents?.get(0)?.description.toString()))
-    if((vm.character.value?.passiveTalents?.size ?: 0) > 1) passiveTalents.add(DetailListElement(iconUrl = "https://api.genshin.dev/characters/$nameId/talent-passive-1", title = vm.character.value?.passiveTalents?.get(1)?.name.toString(), description = vm.character.value?.passiveTalents?.get(1)?.description.toString()))
-    if((vm.character.value?.passiveTalents?.size ?: 0) > 2) passiveTalents.add(DetailListElement(iconUrl = "https://api.genshin.dev/characters/$nameId/talent-passive-2", title = vm.character.value?.passiveTalents?.get(2)?.name.toString(), description = vm.character.value?.passiveTalents?.get(2)?.description.toString()))
+    if((vm.character.value?.passiveTalents?.size ?: 0) > 0) passiveTalents.add(DetailListElement(iconUrl = "$BASE_URL/characters/$nameId/talent-passive-0", title = vm.character.value?.passiveTalents?.get(0)?.name.toString(), description = vm.character.value?.passiveTalents?.get(0)?.description.toString()))
+    if((vm.character.value?.passiveTalents?.size ?: 0) > 1) passiveTalents.add(DetailListElement(iconUrl = "$BASE_URL/characters/$nameId/talent-passive-1", title = vm.character.value?.passiveTalents?.get(1)?.name.toString(), description = vm.character.value?.passiveTalents?.get(1)?.description.toString()))
+    if((vm.character.value?.passiveTalents?.size ?: 0) > 2) passiveTalents.add(DetailListElement(iconUrl = "$BASE_URL/characters/$nameId/talent-passive-2", title = vm.character.value?.passiveTalents?.get(2)?.name.toString(), description = vm.character.value?.passiveTalents?.get(2)?.description.toString()))
 
     val constellations = mutableListOf<DetailListElement>()
-    if((vm.character.value?.constellations?.size ?: 0) > 0) constellations.add(DetailListElement(iconUrl = "https://api.genshin.dev/characters/$nameId/constellation-1", title = vm.character.value?.constellations?.get(0)?.name.toString(), description = vm.character.value?.constellations?.get(0)?.description.toString()))
-    if((vm.character.value?.constellations?.size ?: 0) > 1) constellations.add(DetailListElement(iconUrl = "https://api.genshin.dev/characters/$nameId/constellation-2", title = vm.character.value?.constellations?.get(1)?.name.toString(), description = vm.character.value?.constellations?.get(1)?.description.toString()))
-    if((vm.character.value?.constellations?.size ?: 0) > 2) constellations.add(DetailListElement(iconUrl = "https://api.genshin.dev/characters/$nameId/constellation-3", title = vm.character.value?.constellations?.get(2)?.name.toString(), description = vm.character.value?.constellations?.get(2)?.description.toString()))
-    if((vm.character.value?.constellations?.size ?: 0) > 3) constellations.add(DetailListElement(iconUrl = "https://api.genshin.dev/characters/$nameId/constellation-4", title = vm.character.value?.constellations?.get(3)?.name.toString(), description = vm.character.value?.constellations?.get(3)?.description.toString()))
-    if((vm.character.value?.constellations?.size ?: 0) > 4) constellations.add(DetailListElement(iconUrl = "https://api.genshin.dev/characters/$nameId/constellation-5", title = vm.character.value?.constellations?.get(4)?.name.toString(), description = vm.character.value?.constellations?.get(4)?.description.toString()))
-    if((vm.character.value?.constellations?.size ?: 0) > 5) constellations.add(DetailListElement(iconUrl = "https://api.genshin.dev/characters/$nameId/constellation-6", title = vm.character.value?.constellations?.get(5)?.name.toString(), description = vm.character.value?.constellations?.get(5)?.description.toString()))
+    if((vm.character.value?.constellations?.size ?: 0) > 0) constellations.add(DetailListElement(iconUrl = "$BASE_URL/characters/$nameId/constellation-1", title = vm.character.value?.constellations?.get(0)?.name.toString(), description = vm.character.value?.constellations?.get(0)?.description.toString()))
+    if((vm.character.value?.constellations?.size ?: 0) > 1) constellations.add(DetailListElement(iconUrl = "$BASE_URL/characters/$nameId/constellation-2", title = vm.character.value?.constellations?.get(1)?.name.toString(), description = vm.character.value?.constellations?.get(1)?.description.toString()))
+    if((vm.character.value?.constellations?.size ?: 0) > 2) constellations.add(DetailListElement(iconUrl = "$BASE_URL/characters/$nameId/constellation-3", title = vm.character.value?.constellations?.get(2)?.name.toString(), description = vm.character.value?.constellations?.get(2)?.description.toString()))
+    if((vm.character.value?.constellations?.size ?: 0) > 3) constellations.add(DetailListElement(iconUrl = "$BASE_URL/characters/$nameId/constellation-4", title = vm.character.value?.constellations?.get(3)?.name.toString(), description = vm.character.value?.constellations?.get(3)?.description.toString()))
+    if((vm.character.value?.constellations?.size ?: 0) > 4) constellations.add(DetailListElement(iconUrl = "$BASE_URL/characters/$nameId/constellation-5", title = vm.character.value?.constellations?.get(4)?.name.toString(), description = vm.character.value?.constellations?.get(4)?.description.toString()))
+    if((vm.character.value?.constellations?.size ?: 0) > 5) constellations.add(DetailListElement(iconUrl = "$BASE_URL/characters/$nameId/constellation-6", title = vm.character.value?.constellations?.get(5)?.name.toString(), description = vm.character.value?.constellations?.get(5)?.description.toString()))
 
 
     Image(
@@ -236,7 +236,7 @@ fun DetailPage(nameId:String, characterRoomViewModel: CharacterRoomViewModel) {
                     }
 
                     AsyncImage(
-                        model = BASE_URL + "/characters/$nameId/portrait",
+                        model = "$BASE_URL/characters/$nameId/portrait",
                         contentDescription = "",
                         modifier = Modifier
                             .height(485.dp)

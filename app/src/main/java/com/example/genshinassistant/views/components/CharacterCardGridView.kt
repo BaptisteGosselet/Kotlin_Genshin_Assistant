@@ -70,7 +70,7 @@ fun CharacterCardGridView(nameId:String, name:String, vision:String, navControll
                 }
                 else {
                     AsyncImage(
-                        model = BASE_URL + "/characters/${nameId}/icon-big",
+                        model = BASE_URL+"/characters/${nameId}/icon-big",
                         contentDescription = "",
                         modifier = Modifier.fillMaxSize()
                     )
