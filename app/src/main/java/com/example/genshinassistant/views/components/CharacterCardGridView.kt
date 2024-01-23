@@ -27,7 +27,7 @@ import com.example.genshinassistant.navigation.RouteNames
 @Composable
 fun CharacterCardGridView(nameId:String, name:String, vision:String, navController:NavController) {
 
-
+    val BASE_URL = "https://genshin.jmp.blue";
 
     Box(
         modifier = Modifier.padding(8.dp)
@@ -63,21 +63,21 @@ fun CharacterCardGridView(nameId:String, name:String, vision:String, navControll
 
                 if(name == "Traveler"){
                     AsyncImage(
-                        model = "https://api.genshin.dev/characters/traveler-anemo/icon-big-aether",
+                        model = "$BASE_URL/characters/traveler-anemo/icon-big-aether",
                         contentDescription = "",
                         modifier = Modifier.fillMaxSize()
                     )
                 }
                 else {
                     AsyncImage(
-                        model = "https://api.genshin.dev/characters/${nameId}/icon-big",
+                        model = BASE_URL + "/characters/${nameId}/icon-big",
                         contentDescription = "",
                         modifier = Modifier.fillMaxSize()
                     )
                 }
 
                 AsyncImage(
-                    model = "https://api.genshin.dev/elements/${vision.lowercase()}/icon",
+                    model = BASE_URL + "/elements/${vision.lowercase()}/icon",
                     contentDescription = "",
                     modifier = Modifier
                         .height(35.dp)

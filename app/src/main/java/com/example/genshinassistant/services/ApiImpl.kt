@@ -5,7 +5,7 @@ import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 
-const val BASE_URL = "https://api.genshin.dev/"
+const val BASE_URL = "https://genshin.jmp.blue/"
 
 private val moshiBuilder = Moshi.Builder()
     .add(KotlinJsonAdapterFactory())
