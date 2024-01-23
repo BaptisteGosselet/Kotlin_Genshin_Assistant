@@ -56,6 +56,8 @@ import kotlinx.coroutines.launch
 @Composable
 fun DetailPage(nameId:String, characterRoomViewModel: CharacterRoomViewModel) {
 
+    val BASE_URL = "https://genshin.jmp.blue";
+
     val vm: DetailViewModel = remember { DetailViewModel(nameId, characterRoomViewModel) }
     val context = LocalContext.current
 
@@ -234,7 +236,7 @@ fun DetailPage(nameId:String, characterRoomViewModel: CharacterRoomViewModel) {
                     }
 
                     AsyncImage(
-                        model = "https://api.genshin.dev/characters/$nameId/portrait",
+                        model = BASE_URL + "/characters/$nameId/portrait",
                         contentDescription = "",
                         modifier = Modifier
                             .height(485.dp)
