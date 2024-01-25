@@ -114,7 +114,7 @@ fun DetailPage(nameId:String, characterRoomViewModel: CharacterRoomViewModel) {
                                 Column {
                                     Box(modifier = Modifier.size(10.dp)) {}
                                     AsyncImage(
-                                        model = "https://api.genshin.dev/elements/${vm.character.value?.vision?.lowercase()}/icon",
+                                        model = BASE_URL+"/elements/${vm.character.value?.vision?.lowercase()}/icon",
                                         contentDescription = vm.character.value?.vision.toString(),
                                         modifier = Modifier
                                             .size(50.dp)
@@ -122,7 +122,7 @@ fun DetailPage(nameId:String, characterRoomViewModel: CharacterRoomViewModel) {
                                     )
                                     Box(modifier = Modifier.size(10.dp)) {}
                                     AsyncImage(
-                                        model = "https://api.genshin.dev/nations/${vm.character.value?.nation?.lowercase()}/icon",
+                                        model = BASE_URL+"/nations/${vm.character.value?.nation?.lowercase()}/icon",
                                         contentDescription = vm.character.value?.nation.toString(),
                                         modifier = Modifier
                                             .size(65.dp)
