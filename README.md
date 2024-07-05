@@ -20,3 +20,4 @@ Application Android de promotion des personnages du jeu [Genshin Impact](https:/
 - Page de détails avec appel API
 - Gestion de favoris (BDD Room)
 - Barre de navigation
+- Architecture du Projet MVVM (Model-View-ViewModel)
